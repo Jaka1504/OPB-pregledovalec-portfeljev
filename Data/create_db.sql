@@ -23,13 +23,13 @@ CREATE TABLE Transakcija(
     id SERIAL PRIMARY KEY,
     kolicina FLOAT NOT NULL,
     vrednost FLOAT NOT NULL,
-    cas DATETIME NOT NULL,
+    cas TIMESTAMP NOT NULL,
     portfelj INTEGER NOT NULL REFERENCES Portfelj(id),
     sredstvo INTEGER NOT NULL REFERENCES Sredstvo(id)
 );
 
 CREATE TABLE ZgodovinaCen(
     sredstvo INTEGER NOT NULL REFERENCES Sredstvo(id),
-    cas DATETIME NOT NULL,
+    cas TIMESTAMP NOT NULL,
     cena FLOAT NOT NULL
 );
