@@ -1,0 +1,112 @@
+.povezava {
+    position: absolute;
+    transform: rotate(var(--rot));
+    height: 4vw;
+    width: 4vw;
+}
+
+.karta {
+    height: 4vw;
+    width: 4vw;
+}
+
+.gumb {
+    height: 1vw;
+    width: 1vw;
+}
+
+.bela-povezava {
+    filter: grayscale(1) brightness(6);
+}
+
+
+.siva-povezava {
+    filter: grayscale(1) brightness(3);
+}
+
+.brez-robov {
+    margin: 0;
+    border: 0;
+    padding: 0;
+}
+
+.ni-postavljena-karta {
+    filter: brightness(0.5);
+}
+
+.igralec {
+    position: absolute;
+    left: var(--odmik_x);
+    top: var(--odmik_y);
+}
+
+.hue {
+    filter: hue-rotate(var(--hue)) saturate(30);
+}
+
+.invert {
+    filter: invert();
+}
+
+.tabela {
+    position: relative;
+}
+
+.besedilo {
+    font-size: medium;
+    font-family: Candara;
+}
+
+.besedilo-veliko {
+    font-size: large;
+    font-family: Candara;
+}
+
+.tabela-scroll {
+    max-height: 500px;
+    overflow: auto;
+    display: inline-block;
+}
+
+.progress-bar-lestvica {
+    width: 15vw;
+}
+
+.igralec-text {
+    height: 0.7em;
+}
+
+.puscice {
+    height: 98vh;
+}
+
+.besedilo-zeleno {
+    color: lime;
+}
+
+.besedilo-rdece {
+    color: rgb(255, 48, 48)
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 20px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px #212529;
+    border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #495057;
+    border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #212529;
+    border-radius: 10px;
+  }
