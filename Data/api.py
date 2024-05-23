@@ -1,7 +1,7 @@
 import requests
 import time
 from datetime import datetime
-from modeli import *
+from Data.modeli import *
 
 class Api:
     def __init__(self):
@@ -13,9 +13,10 @@ class Api:
         Vrne seznam trenutnih prvih 2000 kriptovalut po tržni kapitalizaciji.
         '''
         kriptovalute = []
-        cas = datetime.datetime.now()
+        cas = datetime.now()
         for i in range(20):
-            url = self.base_url + f"tickers/?start={i * 100}?limit=100"
+            print(f"Dobljenih prvih {(i+1) * 100} kriptovalut.")
+            url = self.base_url + f"tickers/?start={i * 100}&limit=100"
             r = requests.get(url)
             data = r.json()
             kriptovalute += [Kriptovaluta.from_dict({
@@ -27,7 +28,7 @@ class Api:
             time.sleep(1)
         return kriptovalute
 
-    def dobi_cene_kriptovalut(self, ids : list(int)):
+    def dobi_cene_kriptovalut(self, ids : list):
         '''
         Vrne trenutne cene kriptovalut, katerih id-ji so v seznamu ids, in čas poizvedbe.
         '''

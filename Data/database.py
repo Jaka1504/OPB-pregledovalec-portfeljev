@@ -1,8 +1,8 @@
 import psycopg2, psycopg2.extensions, psycopg2.extras
 psycopg2.extensions.register_type(psycopg2.extensions.UNICODE)
 
-from modeli import *
-import auth_public as auth
+from Data.modeli import *
+import Data.auth_public as auth
 
 
 
@@ -35,13 +35,12 @@ class Repo:
 
     def dodaj_kriptovaluto(self, kriptovaluta : Kriptovaluta):
         cmd = """
-            INSERT into kriptovaluta(kratica, ime, zadnja_cena)
+            INSERT into kriptovaluta(id, kratica, ime, zadnja_cena)
             VALUES (%s, %s, %s, %s)
             RETURNING id
             """
-        data = (kriptovaluta.kratica,  kriptovaluta.ime, kriptovaluta.zadnja_cena)
+        data = (kriptovaluta.id, kriptovaluta.kratica,  kriptovaluta.ime, kriptovaluta.zadnja_cena)
         self.cur.execute(cmd, data)
-        kriptovaluta.id = self.cur.fetchone()[0]
         self.conn.commit()
 
     def dodaj_transakcijo(self, transakcija : Transakcija):
