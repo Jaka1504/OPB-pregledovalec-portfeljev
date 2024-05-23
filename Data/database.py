@@ -33,24 +33,24 @@ class Repo:
         portfelj.id = self.cur.fetchone()[0]
         self.conn.commit()
 
-    def dodaj_sredstvo(self, sredstvo : Sredstvo):
+    def dodaj_kriptovaluto(self, kriptovaluta : Kriptovaluta):
         cmd = """
-            INSERT into sredstvo(kratica, tip, ime, zadnja_cena)
+            INSERT into kriptovaluta(kratica, ime, zadnja_cena)
             VALUES (%s, %s, %s, %s)
             RETURNING id
             """
-        data = (sredstvo.kratica, sredstvo.tip, sredstvo.ime, sredstvo.zadnja_cena)
+        data = (kriptovaluta.kratica,  kriptovaluta.ime, kriptovaluta.zadnja_cena)
         self.cur.execute(cmd, data)
-        sredstvo.id = self.cur.fetchone()[0]
+        kriptovaluta.id = self.cur.fetchone()[0]
         self.conn.commit()
 
     def dodaj_transakcijo(self, transakcija : Transakcija):
         cmd = """
-            INSERT into transakcija(kolicina, vrednost, cas, portfelj, sredstvo)
+            INSERT into transakcija(kolicina, cas, portfelj, kriptovaluta)
             VALUES (%s, %s, %s, %s, %s)
             RETURNING id
             """
-        data = (transakcija.kolicina, transakcija.vrednost, transakcija.cas, transakcija.portfelj, transakcija.sredstvo)
+        data = (transakcija.kolicina, transakcija.cas, transakcija.portfelj, transakcija.kriptovaluta)
         self.cur.execute(cmd, data)
         transakcija.id = self.cur.fetchone()[0]
         self.conn.commit()
@@ -92,73 +92,82 @@ class Repo:
     
     def dobi_transakcijo(self, id):
         cmd = f"""
-            SELECT id, kolicina, vrednost, cas, portfelj, sredstvo from transakcija
+            SELECT id, kolicina, cas, portfelj, kriptovaluta from transakcija
             WHERE id = {id}
             """
         self.cur.execute(cmd)
         transakcija = Transakcija.from_dict(self.cur.fetchone())
 
-    def dobi_transakcije_v_portfelju(self, id, sredstvo=None):
+    def dobi_transakcije_v_portfelju(self, id, kriptovaluta=None):
         cmd = f"""
-            SELECT id, kolicina, vrednost, cas, portfelj, sredstvo from transakcija
+            SELECT id, kolicina, cas, portfelj, kriptovaluta from transakcija
             WHERE portfelj = {id} 
             """
-        if sredstvo is not None:
+        if kriptovaluta is not None:
             cmd += f"""
-                AND sredstvo = {sredstvo}    
+                AND kriptovaluta = {kriptovaluta}    
                 """
         self.cur.execute(cmd)
         transakcije = [Transakcija.from_dict(t) for t in self.cur.fetchall()]
         return transakcije
 
-    def dobi_uporabnikove_transakcije(self, uporabnisko_ime, sredstvo=None):
+    def dobi_uporabnikove_transakcije(self, uporabnisko_ime, kriptovaluta=None):
         cmd = f"""
-            SELECT t.id, t.kolicina, t.vrednost, t.cas, t.portfelj, t.sredstvo 
+            SELECT t.id, t.kolicina, t.cas, t.portfelj, t.kriptovaluta 
             from transakcija t
             JOIN portfelj ON t.portfelj = portfelj.id
             JOIN uporabnik ON lastnik = uporabnik.uporabnisko_ime 
             WHERE lastnik = '{uporabnisko_ime}'
             """
-        if sredstvo is not None:
+        if kriptovaluta is not None:
             cmd += f"""
-                AND sredstvo = {sredstvo}    
+                AND kriptovaluta = {kriptovaluta}    
                 """
         self.cur.execute(cmd)
         transakcije = [Transakcija.from_dict(t) for t in self.cur.fetchall()]
         return transakcije
 
-    def dobi_sredstvo(self, id):
+    def dobi_kriptovaluto(self, id):
         cmd = f"""
-            SELECT id, kratica, tip, ime, zadnja_cena from sredstvo
+            SELECT id, kratica, ime, zadnja_cena from kriptovaluta
             WHERE id = {id}
             """
         self.cur.execute(cmd)
-        sredstvo = Sredstvo.from_dict(self.cur.fetchone())
-        return sredstvo
-
-    def dobi_sredstva(self):
+        kriptovaluta = Kriptovaluta.from_dict(self.cur.fetchone())
+        return kriptovaluta
+    
+    def dobi_kriptovaluto_po_kratici(self, kratica):
         cmd = f"""
-            SELECT id, kratica, tip, ime, zadnja_cena from sredstvo
+            SELECT id, kratica, ime, zadnja_cena from kriptovaluta
+            WHERE kratica = {kratica}
             """
         self.cur.execute(cmd)
-        sredstva = [Sredstvo.from_dict(s) for s in self.cur.fetchall()]
-        return sredstva
+        kriptovaluta = Kriptovaluta.from_dict(self.cur.fetchone())
+        return kriptovaluta
 
-    def dobi_kolicino_sredstev_v_portfelju(self, id):
+    def dobi_kriptovalute(self):
         cmd = f"""
-            SELECT sredstvo, sum(t.kolicina)
+            SELECT id, kratica, tip, ime, zadnja_cena from kriptovaluta
+            """
+        self.cur.execute(cmd)
+        kriptovalute = [Kriptovaluta.from_dict(s) for s in self.cur.fetchall()]
+        return kriptovalute
+
+    def dobi_kolicino_kriptovalut_v_portfelju(self, id):
+        cmd = f"""
+            SELECT kriptovaluta, sum(t.kolicina)
             FROM transakcija t
             JOIN portfelj p ON t.portfelj = p.id
-            GROUP BY sredstvo, p.id
+            GROUP BY kriptovaluta, p.id
             HAVING p.id = {id}
             """
         self.cur.execute(cmd)
         kolicine = dict(self.cur.fetchall())
         return kolicine
 
-    def posodobi_ceno_sredstva(self, id, cena):
+    def posodobi_ceno_kriptovalute(self, id, cena):
         cmd = f"""
-            UPDATE sredstvo
+            UPDATE kriptovaluta
             SET zadnja_cena = {cena}
             WHERE id = {id}
             """
