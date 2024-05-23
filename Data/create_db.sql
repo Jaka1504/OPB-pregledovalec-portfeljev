@@ -11,10 +11,9 @@ CREATE TABLE Portfelj(
     lastnik TEXT NOT NULL REFERENCES Uporabnik(uporabnisko_ime)
 );
 
-CREATE TABLE Sredstvo(
-    id SERIAL PRIMARY KEY,
+CREATE TABLE Kriptovaluta(
+    id INTEGER PRIMARY KEY,
     kratica TEXT NOT NULL,
-    tip TEXT NOT NULL,
     ime TEXT NOT NULL,
     zadnja_cena FLOAT NOT NULL
 );
@@ -22,14 +21,19 @@ CREATE TABLE Sredstvo(
 CREATE TABLE Transakcija(
     id SERIAL PRIMARY KEY,
     kolicina FLOAT NOT NULL,
-    vrednost FLOAT NOT NULL,
     cas TIMESTAMP NOT NULL,
     portfelj INTEGER NOT NULL REFERENCES Portfelj(id),
-    sredstvo INTEGER NOT NULL REFERENCES Sredstvo(id)
+    kriptovaluta INTEGER NOT NULL REFERENCES Kriptovaluta(id)
 );
 
-CREATE TABLE ZgodovinaCen(
-    sredstvo INTEGER NOT NULL REFERENCES Sredstvo(id),
+CREATE TABLE CenaKriptovalute(
+    kriptovaluta INTEGER NOT NULL REFERENCES Kriptovaluta(id),
     cas TIMESTAMP NOT NULL,
     cena FLOAT NOT NULL
+);
+
+CREATE TABLE VrednostPorfelja(
+    portfelj INTEGER NOT NULL REFERENCES Portfelj(id),
+    cas TIMESTAMP NOT NULL,
+    vrednost FLOAT NOT NULL
 );
