@@ -35,7 +35,7 @@ def get_moji_portfelji():
         "donos" : -7.03,
         "trend" : -1.5
     }
-    portfelji = [portfelj1, portfelj2]
+    portfelji = [portfelj1, portfelj2, portfelj1, portfelj2, portfelj1, portfelj2, portfelj1, portfelj2, portfelj1, portfelj2, portfelj1]
     return bottle.template("moji-portfelji", portfelji=portfelji)
 
 @bottle.get("/moji-portfelji/<id_portfelja>")
@@ -45,10 +45,7 @@ def get_portfelj(id_portfelja):
 
 def najdi_portfelj(id_portfelja):
     '''TODO'''
-    portfelj1 = {
-        "ime" : "kripto:)",
-        "transakcije" : [
-            {
+    transakcija1 = {
                 "id" : 1,
                 "sredstvo" : "Bitcoin",
                 "kratica" : "BTC",
@@ -58,8 +55,8 @@ def najdi_portfelj(id_portfelja):
                 "vrednost": 113.69,
                 "donos" : 8.49,
                 "trend" : 0.19
-            },
-            {
+            }
+    transakcija2 = {
                 "id" : 2,
                 "sredstvo" : "Jakacoin",
                 "kratica" : "JKC",
@@ -70,7 +67,9 @@ def najdi_portfelj(id_portfelja):
                 "donos" : 59.57,
                 "trend" : 1.03
             }
-        ]
+    portfelj1 = {
+        "ime" : "kripto:)",
+        "transakcije" : [transakcija1, transakcija2, transakcija1, transakcija2, transakcija1, transakcija2, transakcija1, transakcija2, transakcija1, transakcija2, transakcija1, transakcija2, transakcija1]
     }
     return portfelj1
 

@@ -11,17 +11,17 @@
   <div class="card-body py-0">
     <div class="tabela-scroll d-grid">
       <table class="table text-light">
-        <thead>
+        <thead class="fixed-head bg-secondary">
           <tr>
-            <th scope="col">Sredstvo</th>
-            <th scope="col">Kratica</th>
-            <th scope="col">Datum nakupa</th>
-            <th scope="col">Količina</th>
-            <th scope="col" class="text-end">Cena</th>
-            <th scope="col" class="text-end">Vrednost</th>
-            <th scope="col" class="text-end">Donos</th>
-            <th scope="col" class="text-end">Trend</th>
-            <th scope="col" class="text-end">Vpogled</th>
+            <th scope="col" class="fixed-head">Sredstvo</th>
+            <th scope="col" class="fixed-head">Kratica</th>
+            <th scope="col" class="fixed-head">Datum nakupa</th>
+            <th scope="col" class="fixed-head text-end">Količina</th>
+            <th scope="col" class="fixed-head text-end">Cena</th>
+            <th scope="col" class="fixed-head text-end">Vrednost</th>
+            <th scope="col" class="fixed-head text-end">Donos</th>
+            <th scope="col" class="fixed-head text-end">Trend</th>
+            <th scope="col" class="fixed-head text-end">Vpogled</th>
           </tr>
         </thead>
         <tbody>
@@ -62,24 +62,26 @@
             </td>
           </tr>
           % end
+        </tbody>
+        <tfoot class="fixed-foot bg-secondary">
           <tr>
-            <th scope="row">
+            <th scope="row" class="fiksna-vrstica">
               SKUPAJ
             </th>
-            <td></td> <!-- kratica -->
-            <td></td> <!-- datum -->
-            <td></td> <!-- kolicina -->
-            <td class="text-end">
-              {{sum([transakcija["cena"] for transakcija in portfelj["transakcije"]])}} €
+            <td class="fixed-foot"></td> <!-- kratica -->
+            <td class="fixed-foot"></td> <!-- datum -->
+            <td class="fixed-foot"></td> <!-- kolicina -->
+            <td class="fixed-foot text-end">
+              {{round(sum([transakcija["cena"] for transakcija in portfelj["transakcije"]]), 2)}} €
             </td>
-            <td class="text-end">
+            <td class="fixed-foot text-end">
               % skupna_vrednost = sum([transakcija["vrednost"] for transakcija in portfelj["transakcije"]])
-              {{skupna_vrednost}} €
+              {{round(skupna_vrednost, 2)}} €
             </td>
-            <td class="text-end">
-              {{sum([transakcija["donos"] for transakcija in portfelj["transakcije"]])}} €
+            <td class="fixed-foot text-end">
+              {{round(sum([transakcija["donos"] for transakcija in portfelj["transakcije"]]), 2)}} €
             </td>
-            <td class="text-end">
+            <td class="fixed-foot text-end">
               % skupen_trend = round(sum([transakcija["trend"] * transakcija["vrednost"] for transakcija in portfelj["transakcije"]]) / skupna_vrednost, 2)
               % if skupen_trend >= 0: 
               <span class="besedilo-zeleno">{{skupen_trend}} % ▲</span>
@@ -87,9 +89,9 @@
               <span class="besedilo-rdece">{{skupen_trend}} % ▼</span>
               % end
             </td>
-            <td></td> <!-- vpogled -->
+            <td class="fixed-foot"></td> <!-- vpogled -->
           </tr>
-        </tbody>
+        </tfoot>
       </table>
     </div>
     <div class="row mb-3" width="100%">

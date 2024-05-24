@@ -11,14 +11,14 @@
   <div class="card-body py-0">
     <div class="tabela-scroll d-grid">
       <table class="table text-light">
-        <thead>
+        <thead class="fixed-head bg-secondary">
           <tr>
-            <th scope="col">Ime</th>
-            <th scope="col" class="text-end">Cena</th>
-            <th scope="col" class="text-end">Vrednost</th>
-            <th scope="col" class="text-end">Donos</th>
-            <th scope="col" class="text-end">Trend</th>
-            <th scope="col" class="text-end">Vpogled</th>
+            <th scope="col" class="fixed-head">Ime</th>
+            <th scope="col" class="fixed-head text-end">Cena</th>
+            <th scope="col" class="fixed-head text-end">Vrednost</th>
+            <th scope="col" class="fixed-head text-end">Donos</th>
+            <th scope="col" class="fixed-head text-end">Trend</th>
+            <th scope="col" class="fixed-head text-end">Vpogled</th>
           </tr>
         </thead>
         <tbody>
@@ -28,19 +28,19 @@
               {{portfelj["ime"]}}
             </th>
             <td class="text-end">
-              {{portfelj["cena"]}} €
+              {{round(portfelj["cena"], 2)}} €
             </td>
             <td class="text-end">
-              {{portfelj["vrednost"]}} €
+              {{round(portfelj["vrednost"], 2)}} €
             </td>
             <td class="text-end">
-              {{portfelj["donos"]}} €
+              {{round(portfelj["donos"], 2)}} €
             </td>
             <td class="text-end">
               % if portfelj["trend"] >= 0: 
-              <span class="besedilo-zeleno">{{portfelj["trend"]}} % ▲</span>
+              <span class="besedilo-zeleno">{{round(portfelj["trend"], 2)}} % ▲</span>
               % else:
-              <span class="besedilo-rdece">{{portfelj["trend"]}} % ▼</span>
+              <span class="besedilo-rdece">{{round(portfelj["trend"], 2)}} % ▼</span>
               % end
             </td>
             <td class="text-end text-light">
@@ -50,21 +50,23 @@
             </td>
           </tr>
           % end
+        </tbody>
+        <tfoot class="fixed-foot bg-secondary">
           <tr>
-            <th scope="row">
+            <th scope="row" class="fixed-foot">
               SKUPAJ
             </th>
-            <td class="text-end">
-              {{sum([portfelj["cena"] for portfelj in portfelji])}} €
+            <td class="fixed-foot text-end">
+              {{round(sum([portfelj["cena"] for portfelj in portfelji]), 2)}} €
             </td>
-            <td class="text-end">
+            <td class="fixed-foot text-end">
               % skupna_vrednost = sum([portfelj["vrednost"] for portfelj in portfelji])
-              {{skupna_vrednost}} €
+              {{round(skupna_vrednost, 2)}} €
             </td>
-            <td class="text-end">
-              {{sum([portfelj["donos"] for portfelj in portfelji])}} €
+            <td class="fixed-foot text-end">
+              {{round(sum([portfelj["donos"] for portfelj in portfelji]), 2)}} €
             </td>
-            <td class="text-end">
+            <td class="fixed-foot text-end">
               % skupen_trend = round(sum([portfelj["trend"] * portfelj["vrednost"] for portfelj in portfelji]) / skupna_vrednost, 2)
               % if skupen_trend >= 0: 
               <span class="besedilo-zeleno">{{skupen_trend}} % ▲</span>
@@ -72,10 +74,10 @@
               <span class="besedilo-rdece">{{skupen_trend}} % ▼</span>
               % end
             </td>
-            <td>
+            <td class="fixed-foot">
             </td>
           </tr>
-        </tbody>
+        </tfoot>
       </table>
     </div>
     <div class="row mb-3" width="100%">

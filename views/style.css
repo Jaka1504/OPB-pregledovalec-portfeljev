@@ -88,6 +88,18 @@
     color: rgb(255, 48, 48)
 }
 
+.fixed-head {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.fixed-foot {
+    position: sticky;
+    bottom: 0;
+    z-index: 100;
+}
+
 /* width */
 ::-webkit-scrollbar {
     width: 20px;
