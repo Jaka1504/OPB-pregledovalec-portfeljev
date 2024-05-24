@@ -17,4 +17,12 @@ class KriptovaluteService:
 
 
     def posodobi_ceno(self, kratica):
-        pass
+        """
+        Posodobi ceno kriptovalute s kratico kratica iz tabele Kriptovaluta na zadnjo znano ceno, če taka kriptovaluta obstaja.
+        """
+        try:
+            kriptovaluta = self.repo.dobi_kriptovaluto_po_kratici(kratica)
+            cena = self.api.dobi_cene_kriptovalut([kriptovaluta.id])[0][0].zadnja_cena
+            self.repo.posodobi_ceno_kriptovalute(kriptovaluta.id, cena)
+        except:
+            raise Exception("Kratica ne obstaja.")
