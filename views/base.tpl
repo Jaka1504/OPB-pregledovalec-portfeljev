@@ -39,11 +39,11 @@
               </ul>
               
               <div class="nav-item">
-                <!-- % # if uporabnisko_ime: -->
-                <!-- <a class="nav-link text-light" href="/profil/">uporabnisko_ime</a> -->
-                <!-- % # else: -->
+                % if uporabnisko_ime:
+                <a class="nav-link text-light" href="/profil/">{{uporabnisko_ime}}</a>
+                % else:
                 <a class="nav-link text-light" href="/prijava/">Prijava</a>
-                <!-- % # end -->
+                % end
               </div>
              
             </div>
