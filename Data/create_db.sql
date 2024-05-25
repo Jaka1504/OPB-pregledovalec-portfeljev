@@ -32,7 +32,7 @@ CREATE TABLE CenaKriptovalute(
     cena FLOAT NOT NULL
 );
 
-CREATE TABLE VrednostPorfelja(
+CREATE TABLE VrednostPortfelja(
     portfelj INTEGER NOT NULL REFERENCES Portfelj(id),
     cas TIMESTAMP NOT NULL,
     vrednost FLOAT NOT NULL
