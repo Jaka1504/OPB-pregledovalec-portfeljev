@@ -1,5 +1,6 @@
 import bottle
-from hashlib import sha256
+import Services.logic as logic
+
 
 
 SKRIVNOST = "njrelnfkonmakdnenfonmklernmkondakwndwanfo"
@@ -40,12 +41,14 @@ def get_moji_portfelji():
         "trend" : -1.5
     }
     portfelji = [portfelj1, portfelj2, portfelj1, portfelj2, portfelj1, portfelj2, portfelj1, portfelj2, portfelj1, portfelj2, portfelj1]
+    # portfelji = logic.najdi_vse_portfelje(poisci_uporabnisko_ime())
     return bottle.template("moji-portfelji", portfelji=portfelji, uporabnisko_ime=poisci_uporabnisko_ime())
 
 
 @bottle.get("/moji-portfelji/<id_portfelja>")
 def get_portfelj(id_portfelja):
     portfelj = najdi_portfelj(id_portfelja)
+    # portfelj = logic.najdi_portfelj(id_portfelja)
     return bottle.template("portfelj", portfelj=portfelj, uporabnisko_ime=poisci_uporabnisko_ime())
 
 
@@ -61,8 +64,9 @@ def get_prijava():
 @bottle.post("/prijava/")
 def post_prijava():
     uporabnisko_ime = bottle.request.forms.getunicode("uporabnisko_ime")
-    geslo = zasifriraj_geslo(bottle.request.forms.getunicode("geslo"))
+    geslo = logic.zasifriraj_geslo(bottle.request.forms.getunicode("geslo"))
     napaka = None
+    # TODO daj iz logic
     if uporabnisko_ime in slovar_uporabniskih_imen_in_gesel():
         if preveri_geslo(
             uporabnisko_ime=uporabnisko_ime, zasifrirano_geslo=geslo
@@ -97,7 +101,7 @@ def get_registracija():
 @bottle.post("/registracija/")
 def post_registracija():
     uporabnisko_ime = bottle.request.forms.getunicode("uporabnisko_ime")
-    zasifrirano_geslo = zasifriraj_geslo(bottle.request.forms.getunicode("geslo"))
+    zasifrirano_geslo = logic.zasifriraj_geslo(bottle.request.forms.getunicode("geslo"))
     napaka = None
     if uporabnisko_ime in slovar_uporabniskih_imen_in_gesel().keys():
         napaka = "To uporabniško ime je že zasedeno. Prosim, izberi drugačno ime."
@@ -105,19 +109,17 @@ def post_registracija():
             "registracija", napaka=napaka, uporabnisko_ime=poisci_uporabnisko_ime()
         )
     else:
-        dodaj_uporabnika(uporabnisko_ime=uporabnisko_ime, zasifrirano_geslo=zasifrirano_geslo)
+        # logic.dodaj_uporabnika(uporabnisko_ime=uporabnisko_ime, zasifrirano_geslo=zasifrirano_geslo)
         bottle.response.set_cookie(
             name="uporabnisko_ime", value=uporabnisko_ime, secret=SKRIVNOST, path="/"
         )
         return bottle.redirect("/")
 
 
-#####################################################################################################
-# WIP
-
-@bottle.get("/kriptovaluta/<id_kriptovalute>")
-def get_kriptovaluta(id_kriptovalute):
-    kriptovaluta = najdi_kriptovaluto(id_kriptovalute)
+@bottle.get("/kriptovaluta/<id_portfelja>/<id_kriptovalute>")
+def get_kriptovaluta(id_portfelja, id_kriptovalute):
+    kriptovaluta = najdi_kriptovaluto(id_portfelja, id_kriptovalute)
+    # kriptovaluta = logic.najdi_kriptovaluto(id_portfelja, id_kriptovalute)
     return bottle.template(
         "kriptovaluta",
         kriptovaluta=kriptovaluta,
@@ -154,7 +156,7 @@ def najdi_portfelj(id_portfelja):
     }
     return portfelj1
 
-def najdi_kriptovaluto(id_kriptovalue):
+def najdi_kriptovaluto(id_portfelja, id_kriptovalute):
     '''TODO'''
     transakcija1 = {
                 "id" : 1,
@@ -201,17 +203,12 @@ def poisci_uporabnisko_ime():
     return bottle.request.get_cookie(key="uporabnisko_ime", secret=SKRIVNOST)
 
 
-def zasifriraj_geslo(geslo_raw):
-    '''TODO (prestavit v drug file eventually)'''
-    return sha256(geslo_raw.encode('UTF-8')).hexdigest()
-
-
 def slovar_uporabniskih_imen_in_gesel():
     '''TODO'''
     return {
-        'Test_username': zasifriraj_geslo('Test_username'), 
-        'Micka': zasifriraj_geslo('Micka'),
-        'Francelj': zasifriraj_geslo('Francelj')
+        'Test_username': logic.zasifriraj_geslo('Test_username'), 
+        'Micka': logic.zasifriraj_geslo('Micka'),
+        'Francelj': logic.zasifriraj_geslo('Francelj')
         }
 
 
