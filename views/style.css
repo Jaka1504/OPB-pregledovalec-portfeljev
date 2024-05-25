@@ -68,6 +68,12 @@
     display: inline-block;
 }
 
+.tabela-scroll-mala {
+    max-height: 200px;
+    overflow: auto;
+    display: inline-block;
+}
+
 .progress-bar-lestvica {
     width: 15vw;
 }
