@@ -151,6 +151,7 @@ def najdi_portfelj(id_portfelja):
                 "trend" : 1.03
             }
     portfelj1 = {
+        "id" : 1,
         "ime" : "kripto:)",
         "kriptovalute" : [kriptovaluta1, kriptovaluta2, kriptovaluta1, kriptovaluta2, kriptovaluta1, kriptovaluta2, kriptovaluta1, kriptovaluta2, kriptovaluta1, kriptovaluta2, kriptovaluta1, kriptovaluta2, kriptovaluta1]
     }

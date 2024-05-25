@@ -20,6 +20,7 @@ def najdi_vse_portfelje(uporabnisko_ime):
 def najdi_portfelj(id_portfelja):
     '''Vrne portfelj z ustreznim ID-jem. Portfelj naj bo slovar oblike 
     portfelj = {
+        "id" : 1,
         "ime" : "kripto:)",
         "kriptovalute" : [kriptovaluta1, kriptovaluta2]
     Kriptovalute naj bodo slovarji oblike
