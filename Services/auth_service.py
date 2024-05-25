@@ -25,12 +25,12 @@ class AuthService():
             return False
 
 
-    def zasifriraj_geslo(geslo_raw):
+    def zasifriraj_geslo(self, geslo_raw):
         '''Vrne zakodiran niz z algoritmom SHA256 - za shranjevanje gesel v nerazpoznavni obliki.'''
         return sha256(geslo_raw.encode('UTF-8')).hexdigest()
 
 
-    def dodaj_uporabnika(uporabnisko_ime, zasifrirano_geslo, ime, priimek):
+    def dodaj_uporabnika(self, uporabnisko_ime, zasifrirano_geslo, ime, priimek):
         '''Doda uporabnika v bazo podatkov'''
         uporabnik = Uporabnik(
             uporabnisko_ime=uporabnisko_ime,
