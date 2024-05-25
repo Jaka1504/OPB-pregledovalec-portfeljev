@@ -17,6 +17,13 @@ class Portfelj:
     lastnik : str = field(default="")
     ime : str = field(default="")
 
+@dataclass
+class PortfeljDto:
+    id : int = field(default=0)
+    lastnik : str = field(default="")
+    ime : str = field(default="")
+    vrednost : float = field(default="")
+
 @dataclass_json
 @dataclass
 class Kriptovaluta:
@@ -31,7 +38,7 @@ class Transakcija:
     id : int = field(default=0)
     kolicina : float = field(default=0.)
     cas : datetime = field(default=datetime.now())
-    sredstvo : int = field(default=0)
+    kriptovaluta : int = field(default=0)
     portfelj : int = field(default=0)
 
 @dataclass_json

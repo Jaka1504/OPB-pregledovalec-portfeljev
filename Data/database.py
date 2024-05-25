@@ -57,7 +57,7 @@ class Repo:
         """
         cmd = """
             INSERT into transakcija(kolicina, cas, portfelj, kriptovaluta)
-            VALUES (%s, %s, %s, %s, %s)
+            VALUES (%s, %s, %s, %s)
             RETURNING id
             """
         data = (transakcija.kolicina, transakcija.cas, transakcija.portfelj, transakcija.kriptovaluta)
