@@ -47,7 +47,7 @@ def najdi_portfelj(id_portfelja):
     '''TODO'''
     transakcija1 = {
                 "id" : 1,
-                "sredstvo" : "Bitcoin",
+                "kriptovaluta" : "Bitcoin",
                 "kratica" : "BTC",
                 "cena" : 105.20,
                 "kolicina" : 0.002,
@@ -58,7 +58,7 @@ def najdi_portfelj(id_portfelja):
             }
     transakcija2 = {
                 "id" : 2,
-                "sredstvo" : "Jakacoin",
+                "kriptovaluta" : "Jakacoin",
                 "kratica" : "JKC",
                 "cena" : 95.20,
                 "kolicina" : 4.20,

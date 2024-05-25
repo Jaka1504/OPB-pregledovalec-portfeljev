@@ -7,7 +7,7 @@
       Pozdravljen/-a in dobrodošel/-a v Pregledovalcu portfeljev!
     </p>
     <p>
-      Pred tabo je program, ki ti s pomočjo <a class="link text-dark" href="TBA">API</a>-ja omogoča spremljanje aktualnih cen delnic, kriptovalut in podobnih sredstev.
+      Pred tabo je program, ki ti s pomočjo <a class="link text-dark" href="TBA">API</a>-ja omogoča spremljanje aktualnih cen kriptovalut in njihovih kombinacij, ki jih lahko združiš v svoje portfelje.
     </p>
   </div>
 </div>

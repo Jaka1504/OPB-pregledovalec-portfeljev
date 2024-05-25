@@ -32,8 +32,8 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link text-light" href="/sredstva/">
-                    Sredstva
+                  <a class="nav-link text-light" href="/kriptovalute/">
+                    Kriptovalute
                   </a>
                 </li>
               </ul>

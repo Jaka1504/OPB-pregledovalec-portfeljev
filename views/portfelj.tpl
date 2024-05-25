@@ -13,7 +13,7 @@
       <table class="table text-light">
         <thead class="fixed-head bg-secondary">
           <tr>
-            <th scope="col" class="fixed-head">Sredstvo</th>
+            <th scope="col" class="fixed-head">Kriptovaluta</th>
             <th scope="col" class="fixed-head">Kratica</th>
             <th scope="col" class="fixed-head">Datum nakupa</th>
             <th scope="col" class="fixed-head text-end">Količina</th>
@@ -28,7 +28,7 @@
           % for transakcija in portfelj["transakcije"]:
           <tr>
             <th scope="row">
-              {{transakcija["sredstvo"]}}
+              {{transakcija["kriptovaluta"]}}
             </th>
             <td>
               {{transakcija["kratica"]}}
