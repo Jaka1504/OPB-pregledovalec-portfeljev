@@ -13,7 +13,7 @@ class Repo:
         self.conn = psycopg2.connect(database=auth.db, host=auth.host, user=auth.user, password=auth.password, port=DB_PORT)
         self.cur = self.conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-    def dodaj_uporabinka(self, uporabnik : Uporabnik):
+    def dodaj_uporabnika(self, uporabnik : Uporabnik):
         """
         Doda uporabnika v tabelo Uporabnik.
         """
