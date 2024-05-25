@@ -128,31 +128,29 @@ def get_kriptovaluta(id_kriptovalute):
 
 def najdi_portfelj(id_portfelja):
     '''TODO'''
-    transakcija1 = {
+    kriptovaluta1 = {
                 "id" : 1,
-                "kriptovaluta" : "Bitcoin",
+                "ime" : "Bitcoin",
                 "kratica" : "BTC",
                 "cena" : 105.20,
                 "kolicina" : 0.002,
-                "datum" : "13. 5. 2024",
                 "vrednost": 113.69,
                 "donos" : 8.49,
                 "trend" : 0.19
             }
-    transakcija2 = {
+    kriptovaluta2 = {
                 "id" : 2,
-                "kriptovaluta" : "Jakacoin",
+                "ime" : "Jakacoin",
                 "kratica" : "JKC",
                 "cena" : 95.20,
                 "kolicina" : 4.20,
-                "datum" : "11. 9. 2001",
                 "vrednost": 153.69,
                 "donos" : 59.57,
                 "trend" : 1.03
             }
     portfelj1 = {
         "ime" : "kripto:)",
-        "transakcije" : [transakcija1, transakcija2, transakcija1, transakcija2, transakcija1, transakcija2, transakcija1, transakcija2, transakcija1, transakcija2, transakcija1, transakcija2, transakcija1]
+        "kriptovalute" : [kriptovaluta1, kriptovaluta2, kriptovaluta1, kriptovaluta2, kriptovaluta1, kriptovaluta2, kriptovaluta1, kriptovaluta2, kriptovaluta1, kriptovaluta2, kriptovaluta1, kriptovaluta2, kriptovaluta1]
     }
     return portfelj1
 
@@ -173,9 +171,24 @@ def najdi_kriptovaluto(id_kriptovalue):
     kriptovaluta = {
         "ime": "Bitcoin",
         "kratica": "BTC",
+        "ime_portfelja": "kripto:)",
         "vrednost_enote": 18697.65,
         "trend": 0.64,
         "transakcije": [
+            transakcija1,
+            transakcija2,
+            transakcija1,
+            transakcija2,
+            transakcija1,
+            transakcija2,
+            transakcija1,
+            transakcija2,
+            transakcija1,
+            transakcija2,
+            transakcija1,
+            transakcija2,
+            transakcija1,
+            transakcija2,
             transakcija1,
             transakcija2
         ]
