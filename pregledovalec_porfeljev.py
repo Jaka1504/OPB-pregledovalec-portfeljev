@@ -48,9 +48,6 @@ def get_portfelj(id_portfelja):
     portfelj = najdi_portfelj(id_portfelja)
     return bottle.template("portfelj", portfelj=portfelj, uporabnisko_ime=poisci_uporabnisko_ime())
 
-#####################################################################################################
-# WIP
-
 
 @bottle.get("/prijava/")
 def get_prijava():
@@ -115,6 +112,17 @@ def post_registracija():
         return bottle.redirect("/")
 
 
+#####################################################################################################
+# WIP
+
+@bottle.get("/kriptovaluta/<id_kriptovalute>")
+def get_kriptovaluta(id_kriptovalute):
+    kriptovaluta = najdi_kriptovaluto(id_kriptovalute)
+    return bottle.template(
+        "kriptovaluta",
+        kriptovaluta=kriptovaluta,
+        uporabnisko_ime=poisci_uporabnisko_ime()
+        )
 
 #####################################################################################################
 
@@ -147,6 +155,32 @@ def najdi_portfelj(id_portfelja):
         "transakcije" : [transakcija1, transakcija2, transakcija1, transakcija2, transakcija1, transakcija2, transakcija1, transakcija2, transakcija1, transakcija2, transakcija1, transakcija2, transakcija1]
     }
     return portfelj1
+
+def najdi_kriptovaluto(id_kriptovalue):
+    '''TODO'''
+    transakcija1 = {
+                "id" : 1,
+                "cena_enote" : 20105.20,
+                "kolicina" : 0.002,
+                "datum" : "13. 5. 2024",
+            }
+    transakcija2 = {
+                "id" : 2,
+                "cena_enote" : 19595.20,
+                "kolicina" : 0.00420,
+                "datum" : "11. 9. 2001",
+            }
+    kriptovaluta = {
+        "ime": "Bitcoin",
+        "kratica": "BTC",
+        "vrednost_enote": 18697.65,
+        "trend": 0.64,
+        "transakcije": [
+            transakcija1,
+            transakcija2
+        ]
+    }
+    return kriptovaluta
 
 
 def poisci_uporabnisko_ime():

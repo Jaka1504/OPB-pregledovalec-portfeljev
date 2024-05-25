@@ -37,26 +37,26 @@
               {{transakcija["datum"]}}
             </td>
             <td class="text-end">
-              {{transakcija["kolicina"]}}
+              {{f"{transakcija["kolicina"]:.6f}"}}
             </td>
             <td class="text-end">
-              {{transakcija["cena"]}} €
+              {{f"{transakcija["cena"]:.2f}"}} €
             </td>
             <td class="text-end">
-              {{transakcija["vrednost"]}} €
+              {{f"{transakcija["vrednost"]:.2f}"}} €
             </td>
             <td class="text-end">
-              {{transakcija["donos"]}} €
+              {{f"{transakcija["donos"]:.2f}"}} €
             </td>
             <td class="text-end">
               % if transakcija["trend"] >= 0: 
-              <span class="besedilo-zeleno">{{transakcija["trend"]}} % ▲</span>
+              <span class="besedilo-zeleno">{{f"{transakcija["trend"]:.2f}"}} % ▲</span>
               % else:
-              <span class="besedilo-rdece">{{transakcija["trend"]}} % ▼</span>
+              <span class="besedilo-rdece">{{f"{transakcija["trend"]:.2f}"}} % ▼</span>
               % end
             </td>
             <td class="text-end text-light">
-              <a class="btn btn-outline-light m-0 px-3 py-0" href="/transakcija/{{transakcija['id']}}">
+              <a class="btn btn-outline-light m-0 px-3 py-0" href="/kriptovaluta/{{transakcija['id']}}">
                 <img src="/img/search.svg" class="invert"></img>
               </a>
             </td>
@@ -72,21 +72,21 @@
             <td class="fixed-foot"></td> <!-- datum -->
             <td class="fixed-foot"></td> <!-- kolicina -->
             <td class="fixed-foot text-end">
-              {{round(sum([transakcija["cena"] for transakcija in portfelj["transakcije"]]), 2)}} €
+              {{f"{sum([transakcija["cena"] for transakcija in portfelj["transakcije"]]):.2f}"}} €
             </td>
             <td class="fixed-foot text-end">
               % skupna_vrednost = sum([transakcija["vrednost"] for transakcija in portfelj["transakcije"]])
-              {{round(skupna_vrednost, 2)}} €
+              {{f"{skupna_vrednost:.2f}"}} €
             </td>
             <td class="fixed-foot text-end">
-              {{round(sum([transakcija["donos"] for transakcija in portfelj["transakcije"]]), 2)}} €
+              {{f"{sum([transakcija["donos"] for transakcija in portfelj["transakcije"]]):.2f}"}} €
             </td>
             <td class="fixed-foot text-end">
-              % skupen_trend = round(sum([transakcija["trend"] * transakcija["vrednost"] for transakcija in portfelj["transakcije"]]) / skupna_vrednost, 2)
+              % skupen_trend = sum([transakcija["trend"] * transakcija["vrednost"] for transakcija in portfelj["transakcije"]]) / skupna_vrednost
               % if skupen_trend >= 0: 
-              <span class="besedilo-zeleno">{{skupen_trend}} % ▲</span>
+              <span class="besedilo-zeleno">{{f"{skupen_trend:.2f}"}} % ▲</span>
               % else:
-              <span class="besedilo-rdece">{{skupen_trend}} % ▼</span>
+              <span class="besedilo-rdece">{{f"{skupen_trend:.2f}"}} % ▼</span>
               % end
             </td>
             <td class="fixed-foot"></td> <!-- vpogled -->
