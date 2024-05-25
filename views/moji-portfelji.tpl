@@ -28,19 +28,19 @@
               {{portfelj["ime"]}}
             </th>
             <td class="text-end">
-              {{round(portfelj["cena"], 2)}} €
+              {{f"{portfelj["cena"]:.2f}"}} €
             </td>
             <td class="text-end">
-              {{round(portfelj["vrednost"], 2)}} €
+              {{f"{portfelj["vrednost"]:.2f}"}} €
             </td>
             <td class="text-end">
-              {{round(portfelj["donos"], 2)}} €
+              {{f"{portfelj["donos"]:.2f}"}} €
             </td>
             <td class="text-end">
               % if portfelj["trend"] >= 0: 
-              <span class="besedilo-zeleno">{{round(portfelj["trend"], 2)}} % ▲</span>
+              <span class="besedilo-zeleno">{{f"{portfelj["trend"]:.2f}"}} % ▲</span>
               % else:
-              <span class="besedilo-rdece">{{round(portfelj["trend"], 2)}} % ▼</span>
+              <span class="besedilo-rdece">{{f"{portfelj["trend"]:.2f}"}} % ▼</span>
               % end
             </td>
             <td class="text-end text-light">
@@ -57,21 +57,21 @@
               SKUPAJ
             </th>
             <td class="fixed-foot text-end">
-              {{round(sum([portfelj["cena"] for portfelj in portfelji]), 2)}} €
+              {{f"{sum([portfelj["cena"] for portfelj in portfelji]):.2f}"}} €
             </td>
             <td class="fixed-foot text-end">
               % skupna_vrednost = sum([portfelj["vrednost"] for portfelj in portfelji])
-              {{round(skupna_vrednost, 2)}} €
+              {{f"{skupna_vrednost:.2f}"}} €
             </td>
             <td class="fixed-foot text-end">
-              {{round(sum([portfelj["donos"] for portfelj in portfelji]), 2)}} €
+              {{f"{sum([portfelj["donos"] for portfelj in portfelji]):.2f}"}} €
             </td>
             <td class="fixed-foot text-end">
-              % skupen_trend = round(sum([portfelj["trend"] * portfelj["vrednost"] for portfelj in portfelji]) / skupna_vrednost, 2)
+              % skupen_trend = sum([portfelj["trend"] * portfelj["vrednost"] for portfelj in portfelji]) / skupna_vrednost
               % if skupen_trend >= 0: 
-              <span class="besedilo-zeleno">{{skupen_trend}} % ▲</span>
+              <span class="besedilo-zeleno">{{f"{skupen_trend:.2f}"}} % ▲</span>
               % else:
-              <span class="besedilo-rdece">{{skupen_trend}} % ▼</span>
+              <span class="besedilo-rdece">{{f"{skupen_trend:.2f}"}} % ▼</span>
               % end
             </td>
             <td class="fixed-foot">
