@@ -1,5 +1,9 @@
 import bottle
-import Services.logic as logic
+from Services.auth_service import AuthService
+from Services.portfelj_service import PortfeljService
+
+auth = AuthService()
+p_service = PortfeljService()
 
 
 
