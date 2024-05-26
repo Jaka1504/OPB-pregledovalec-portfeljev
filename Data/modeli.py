@@ -23,6 +23,7 @@ class PortfeljDto:
     lastnik : str = field(default="")
     ime : str = field(default="")
     vrednost : float = field(default="")
+    kriptovalute : dict = field(default=dict())
 
 @dataclass_json
 @dataclass
