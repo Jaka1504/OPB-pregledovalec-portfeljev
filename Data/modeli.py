@@ -44,6 +44,16 @@ class Transakcija:
 
 @dataclass_json
 @dataclass
+class TransakcijaDto:
+    id : int = field(default=0)
+    kolicina : float = field(default=0.)
+    cas : datetime = field(default=datetime.now())
+    kriptovaluta : int = field(default=0)
+    portfelj : int = field(default=0)
+    cena : float = field(default=0.)
+
+@dataclass_json
+@dataclass
 class CenaKriptovalute:
     kriptovaluta : int = field(default=0)
     cas : datetime = field(default=datetime.now())

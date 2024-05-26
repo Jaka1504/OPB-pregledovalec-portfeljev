@@ -154,10 +154,52 @@ class Repo:
             """
         if kriptovaluta is not None:
             cmd += f"""
-                AND kriptovaluta = {kriptovaluta}    
+                AND t.kriptovaluta = {kriptovaluta}    
                 """
         self.cur.execute(cmd)
         transakcije = [Transakcija.from_dict(t) for t in self.cur.fetchall()]
+        return transakcije
+
+    def dobi_transakcije_v_portfeljuDTO(self, id, kriptovaluta=None):
+        """
+        Če je kriptovaluta=None, vrne seznam vseh transakcij v portfelju z id-jem id iz tabele Transakcija, 
+        sicer vrne seznam vseh transakcij v portfelju z id-jem id in kriptovaluto kriptovaluta.
+        Transakcije so objekti TransakcijaDto() iz Data.modeli.
+        """
+        cmd = f"""
+            SELECT t.id, t.kolicina, t.cas, t.portfelj, t.kriptovaluta, c.cena 
+            from transakcija t
+            JOIN cenakriptovalute c ON t.cas = c.cas AND t.kriptovaluta = c.kriptovaluta
+            WHERE portfelj = {id} 
+            """
+        if kriptovaluta is not None:
+            cmd += f"""
+                AND t.kriptovaluta = {kriptovaluta}    
+                """
+        self.cur.execute(cmd)
+        transakcije = [TransakcijaDto.from_dict(t) for t in self.cur.fetchall()]
+        return transakcije
+
+    def dobi_uporabnikove_transakcijeDTO(self, uporabnisko_ime, kriptovaluta=None):
+        """
+        Če je kriptovaluta=None, vrne seznam vseh transakcij uporabnika z uporabniškim imenom uporabnisko_ime iz tabele Transakcija, 
+        sicer vrne seznam vseh transakcij uporabnika z uporabniškim imenom uporabnisko_ime in kriptovaluto kriptovaluta.
+        Transakcije so objekti TransakcijaDto() iz Data.modeli.
+        """
+        cmd = f"""
+            SELECT t.id, t.kolicina, t.cas, t.portfelj, t.kriptovaluta, c.cena 
+            from transakcija t
+            JOIN cenakriptovalute c ON t.cas = c.cas AND t.kriptovaluta = c.kriptovaluta
+            JOIN portfelj ON t.portfelj = portfelj.id
+            JOIN uporabnik ON lastnik = uporabnik.uporabnisko_ime 
+            WHERE lastnik = '{uporabnisko_ime}'
+            """
+        if kriptovaluta is not None:
+            cmd += f"""
+                AND t.kriptovaluta = {kriptovaluta}    
+                """
+        self.cur.execute(cmd)
+        transakcije = [TransakcijaDto.from_dict(t) for t in self.cur.fetchall()]
         return transakcije
 
     def dobi_kriptovaluto(self, id):
