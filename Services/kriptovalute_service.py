@@ -26,3 +26,8 @@ class KriptovaluteService:
             self.repo.posodobi_ceno_kriptovalute(kriptovaluta.id, cena)
         except:
             raise Exception("Kratica ne obstaja.")
+
+    def dobi_kriptovaluto(self, id):
+        """Vrne objekt Kriptovaluta() iz Data.modeli, v katerem so shranjeni podatki o kriptovaluti z id-jem id."""
+        kriptovaluta = self.repo.dobi_kriptovaluto(id)
+        return kriptovaluta
