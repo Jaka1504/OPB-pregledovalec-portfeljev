@@ -33,6 +33,8 @@ class Api:
         Vrne trenutne cene kriptovalut, katerih id-ji so v seznamu ids, in čas poizvedbe.
         '''
         cas = datetime.now().strftime(self.tformat)
+        if not ids:
+            return ([], cas)
         ids_string = ",".join(str(id) for id in ids)
         url = self.base_url + f"ticker/?id={ids_string}"
         r = requests.get(url)
@@ -43,5 +45,5 @@ class Api:
                 'ime': d['name'],
                 'zadnja_cena': float(d['price_usd'])
                 }) for d in data]
-        return [kriptovalute, cas]
+        return (kriptovalute, cas)
         

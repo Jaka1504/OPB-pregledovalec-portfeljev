@@ -68,11 +68,11 @@ def get_prijava():
 @bottle.post("/prijava/")
 def post_prijava():
     uporabnisko_ime = bottle.request.forms.getunicode("uporabnisko_ime")
-    geslo = logic.zasifriraj_geslo(bottle.request.forms.getunicode("geslo"))
+    geslo = auth.zasifriraj_geslo(bottle.request.forms.getunicode("geslo"))
     napaka = None
-    # TODO daj iz logic
-    if uporabnisko_ime in slovar_uporabniskih_imen_in_gesel():
-        if preveri_geslo(
+    # TODO daj iz auth
+    if uporabnisko_ime in auth.seznam_uporabniskih_imen():
+        if auth.preveri_geslo(
             uporabnisko_ime=uporabnisko_ime, zasifrirano_geslo=geslo
         ):
             bottle.response.set_cookie(
@@ -93,6 +93,31 @@ def post_prijava():
         return bottle.redirect("/")
 
 
+@bottle.get("/nov-portfelj/")
+def get_nov_portfelj():
+    return bottle.template(
+        "nov-portfelj",
+        napaka=None,
+        uporabnisko_ime=poisci_uporabnisko_ime(),
+    )
+
+
+@bottle.post("/nov-portfelj/")
+def post_nov_portfelj():
+    ime_portfelja = bottle.request.forms.getunicode("ime_portfelja")
+    uporabnisko_ime = poisci_uporabnisko_ime()
+    napaka = None
+    imena_portfeljev=[portfelj.ime for portfelj in p_service.najdi_vse_portfelje(uporabnisko_ime=uporabnisko_ime)]
+    if ime_portfelja in imena_portfeljev:
+        napaka = "Na tem uporabniškem računu že obstaja portfelj s tem imenom. Prosim, izberite drugo ime."
+        return bottle.template(
+            "nov-portfelj", napaka=napaka, uporabnisko_ime=poisci_uporabnisko_ime()
+        )
+    else:
+        p_service.ustvari_portfelj(uporabnisko_ime=uporabnisko_ime, ime_portfelja=ime_portfelja)
+        return bottle.redirect("/moji-portfelji/")
+
+
 @bottle.get("/registracija/")
 def get_registracija():
     return bottle.template(
@@ -105,15 +130,17 @@ def get_registracija():
 @bottle.post("/registracija/")
 def post_registracija():
     uporabnisko_ime = bottle.request.forms.getunicode("uporabnisko_ime")
-    zasifrirano_geslo = logic.zasifriraj_geslo(bottle.request.forms.getunicode("geslo"))
+    ime = bottle.request.forms.getunicode("ime")
+    priimek = bottle.request.forms.getunicode("priimek")
+    zasifrirano_geslo = auth.zasifriraj_geslo(bottle.request.forms.getunicode("geslo"))
     napaka = None
-    if uporabnisko_ime in slovar_uporabniskih_imen_in_gesel().keys():
+    if uporabnisko_ime in auth.seznam_uporabniskih_imen():
         napaka = "To uporabniško ime je že zasedeno. Prosim, izberi drugačno ime."
         return bottle.template(
             "registracija", napaka=napaka, uporabnisko_ime=poisci_uporabnisko_ime()
         )
     else:
-        # logic.dodaj_uporabnika(uporabnisko_ime=uporabnisko_ime, zasifrirano_geslo=zasifrirano_geslo)
+        auth.dodaj_uporabnika(uporabnisko_ime=uporabnisko_ime, zasifrirano_geslo=zasifrirano_geslo, ime=ime, priimek=priimek)
         bottle.response.set_cookie(
             name="uporabnisko_ime", value=uporabnisko_ime, secret=SKRIVNOST, path="/"
         )
@@ -205,27 +232,7 @@ def najdi_kriptovaluto(id_portfelja, id_kriptovalute):
 
 def poisci_uporabnisko_ime():
     """Poišče in vrne vrednost piškotka `uporabnisko_ime`."""
-    return "testnitest"
-    # return bottle.request.get_cookie(key="uporabnisko_ime", secret=SKRIVNOST)
-
-
-def slovar_uporabniskih_imen_in_gesel():
-    '''TODO'''
-    return {
-        'Test_username': logic.zasifriraj_geslo('Test_username'), 
-        'Micka': logic.zasifriraj_geslo('Micka'),
-        'Francelj': logic.zasifriraj_geslo('Francelj')
-        }
-
-
-def preveri_geslo(uporabnisko_ime, zasifrirano_geslo):
-    '''TODO'''
-    return slovar_uporabniskih_imen_in_gesel()[uporabnisko_ime] == zasifrirano_geslo
-
-
-def dodaj_uporabnika(uporabnisko_ime, zasifrirano_geslo):
-    '''TODO'''
-    pass
+    return bottle.request.get_cookie(key="uporabnisko_ime", secret=SKRIVNOST)
 
 
 bottle.run(debug=True, reloader=True)
