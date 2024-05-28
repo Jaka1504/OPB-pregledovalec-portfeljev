@@ -17,13 +17,14 @@ class Portfelj:
     lastnik : str = field(default="")
     ime : str = field(default="")
 
+@dataclass_json
 @dataclass
 class PortfeljDto:
     id : int = field(default=0)
     lastnik : str = field(default="")
     ime : str = field(default="")
     vrednost : float = field(default="")
-    kriptovalute : dict = field(default=dict())
+    kriptovalute : dict = field(default=None)
 
 @dataclass_json
 @dataclass
