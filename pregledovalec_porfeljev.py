@@ -44,9 +44,9 @@ def get_moji_portfelji():
         "donos" : -7.03,
         "trend" : -1.5
     }
-    portfelji = [portfelj1, portfelj2, portfelj1, portfelj2, portfelj1, portfelj2, portfelj1, portfelj2, portfelj1, portfelj2, portfelj1]
-    # portfelji = logic.najdi_vse_portfelje(poisci_uporabnisko_ime())
-    return bottle.template("moji-portfelji", portfelji=portfelji, uporabnisko_ime=poisci_uporabnisko_ime())
+    # portfelji = [portfelj1, portfelj2, portfelj1, portfelj2, portfelj1, portfelj2, portfelj1, portfelj2, portfelj1, portfelj2, portfelj1]
+    portfelji = p_service.najdi_vse_portfelje(poisci_uporabnisko_ime())
+    return bottle.template("moji-portfelji-reduciran", portfelji=portfelji, uporabnisko_ime=poisci_uporabnisko_ime())
 
 
 @bottle.get("/moji-portfelji/<id_portfelja>")
@@ -205,7 +205,8 @@ def najdi_kriptovaluto(id_portfelja, id_kriptovalute):
 
 def poisci_uporabnisko_ime():
     """Poišče in vrne vrednost piškotka `uporabnisko_ime`."""
-    return bottle.request.get_cookie(key="uporabnisko_ime", secret=SKRIVNOST)
+    return "testnitest"
+    # return bottle.request.get_cookie(key="uporabnisko_ime", secret=SKRIVNOST)
 
 
 def slovar_uporabniskih_imen_in_gesel():
