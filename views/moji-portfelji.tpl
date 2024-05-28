@@ -85,7 +85,7 @@
         <a class="btn btn-dark btn-block" href="/">Posodobi stanje</a>
       </div>
       <div class="col d-grid">
-        <a class="btn btn-dark btn-block" href="/">Dodaj nov portfelj</a>
+        <a class="btn btn-dark btn-block" href="/nov-portfelj/">Dodaj nov portfelj</a>
       </div>
     </div>
   </div>
