@@ -38,12 +38,12 @@ class TransakcijeService():
     def dobi_transakcije_v_portfelju(self, id_portfelja, id_kripto=None):
         """Če je id_kripto=None, vrne seznam vseh transakcij v portfelju z id-jem id portfelja, sicer vrne 
         le transakcije s kriptovaluto z id-jem id_kripto Transakcije so objekti TransakcijaDto() iz Data.modeli. """
-        transakcije = self.repo.dobi_transakcije_v_portfeljuDTO(id_portfelja)
+        transakcije = self.repo.dobi_transakcije_v_portfeljuDTO(id=id_portfelja, kriptovaluta=id_kripto)
         return transakcije
 
     def dobi_uporabnikove_transakcije(self, uporabnisko_ime, id_kripto=None):
         """Če je id_kripto=None, vrne seznam vseh transakcij uporabnika z uporabniškim imenom 
         uporabnisko_ime, sicer vrne le transakcije s kriptovaluto z id-jem id_kripto. Transakcije
         so objekti TransakcijaDto() it Data.modeli."""
-        transakcije = self.repo.dobi_uporabnikove_transakcijeDTO(uporabnisko_ime)
+        transakcije = self.repo.dobi_uporabnikove_transakcijeDTO(uporabnisko_ime=uporabnisko_ime, kriptovaluta=id_kripto)
         return transakcije
