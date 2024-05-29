@@ -1,10 +1,17 @@
-import bottle
+import UserInterface.bottle as bottle
 from Services.auth_service import AuthService
 from Services.portfelj_service import PortfeljService
 
+
+# Da bottle najde template v pravi mapi
+import os
+base_path = os.path.abspath(os.path.dirname(__file__))
+views_path = os.path.join(base_path, 'UserInterface', 'views')
+bottle.TEMPLATE_PATH.insert(0, views_path)
+
+
 auth = AuthService()
 p_service = PortfeljService()
-
 
 
 SKRIVNOST = "njrelnfkonmakdnenfonmklernmkondakwndwanfo"
@@ -12,12 +19,12 @@ SKRIVNOST = "njrelnfkonmakdnenfonmklernmkondakwndwanfo"
 
 @bottle.get("/static/<ime_datoteke:path>")
 def static(ime_datoteke):
-    return bottle.static_file(ime_datoteke, root="views")
+    return bottle.static_file(ime_datoteke, root="UserInterface/views")
 
 
 @bottle.get("/img/<ime_datoteke:path>")
 def img(ime_datoteke):
-    return bottle.static_file(ime_datoteke, root="img")
+    return bottle.static_file(ime_datoteke, root="UserInterface/img")
 
 
 @bottle.get("/")
