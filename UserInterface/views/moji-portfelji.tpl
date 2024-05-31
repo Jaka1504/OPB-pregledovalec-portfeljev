@@ -44,7 +44,7 @@
               % end
             </td>
             <td class="text-end text-light">
-              <a class="btn btn-outline-light m-0 px-3 py-0" href="/moji-portfelji/{{portfelj['id']}}">
+              <a class="btn btn-outline-light m-0 px-3 py-0" href="/portfelj/{{portfelj['id']}}/">
                 <img src="/img/search.svg" class="invert"></img>
               </a>
             </td>

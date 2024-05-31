@@ -52,7 +52,7 @@
               % end
             </td>
             <td class="text-end text-light">
-              <a class="btn btn-outline-light m-0 px-3 py-0" href="/kriptovaluta/{{portfelj['id']}}/{{kriptovaluta['id']}}">
+              <a class="btn btn-outline-light m-0 px-3 py-0" href="/kriptovaluta/{{portfelj['id']}}/{{kriptovaluta['id']}}/">
                 <img src="/img/search.svg" class="invert"></img>
               </a>
             </td>
