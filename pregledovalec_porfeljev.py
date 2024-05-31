@@ -56,7 +56,7 @@ def get_moji_portfelji():
     return bottle.template("moji-portfelji-reduciran", portfelji=portfelji, uporabnisko_ime=poisci_uporabnisko_ime())
 
 
-@bottle.get("/moji-portfelji/<id_portfelja>")
+@bottle.get("/portfelj/<id_portfelja>/")
 def get_portfelj(id_portfelja):
     portfelj = najdi_portfelj(id_portfelja)
     # portfelj = logic.najdi_portfelj(id_portfelja)
@@ -98,33 +98,8 @@ def post_prijava():
         )
     else:
         return bottle.redirect("/")
-
-
-@bottle.get("/nov-portfelj/")
-def get_nov_portfelj():
-    return bottle.template(
-        "nov-portfelj",
-        napaka=None,
-        uporabnisko_ime=poisci_uporabnisko_ime(),
-    )
-
-
-@bottle.post("/nov-portfelj/")
-def post_nov_portfelj():
-    ime_portfelja = bottle.request.forms.getunicode("ime_portfelja")
-    uporabnisko_ime = poisci_uporabnisko_ime()
-    napaka = None
-    imena_portfeljev=[portfelj.ime for portfelj in p_service.najdi_vse_portfelje(uporabnisko_ime=uporabnisko_ime)]
-    if ime_portfelja in imena_portfeljev:
-        napaka = "Na tem uporabniškem računu že obstaja portfelj s tem imenom. Prosim, izberite drugo ime."
-        return bottle.template(
-            "nov-portfelj", napaka=napaka, uporabnisko_ime=poisci_uporabnisko_ime()
-        )
-    else:
-        p_service.ustvari_portfelj(uporabnisko_ime=uporabnisko_ime, ime_portfelja=ime_portfelja)
-        return bottle.redirect("/moji-portfelji/")
-
-
+    
+    
 @bottle.get("/registracija/")
 def get_registracija():
     return bottle.template(
@@ -152,9 +127,46 @@ def post_registracija():
             name="uporabnisko_ime", value=uporabnisko_ime, secret=SKRIVNOST, path="/"
         )
         return bottle.redirect("/")
+    
+
+@bottle.get("/profil/")
+def get_profil():
+    uporabnisko_ime = poisci_uporabnisko_ime()
+    return bottle.template("profil", uporabnisko_ime=uporabnisko_ime, napaka=None)
 
 
-@bottle.get("/kriptovaluta/<id_portfelja>/<id_kriptovalute>")
+@bottle.post("/odjava/")
+def post_odjava():
+    odjavi_uporabnika()
+    return bottle.redirect("/")
+
+
+@bottle.get("/nov-portfelj/")
+def get_nov_portfelj():
+    return bottle.template(
+        "nov-portfelj",
+        napaka=None,
+        uporabnisko_ime=poisci_uporabnisko_ime(),
+    )
+
+
+@bottle.post("/nov-portfelj/")
+def post_nov_portfelj():
+    ime_portfelja = bottle.request.forms.getunicode("ime_portfelja")
+    uporabnisko_ime = poisci_uporabnisko_ime()
+    napaka = None
+    imena_portfeljev=[portfelj.ime for portfelj in p_service.najdi_vse_portfelje(uporabnisko_ime=uporabnisko_ime)]
+    if ime_portfelja in imena_portfeljev:
+        napaka = "Na tem uporabniškem računu že obstaja portfelj s tem imenom. Prosim, izberite drugo ime."
+        return bottle.template(
+            "nov-portfelj", napaka=napaka, uporabnisko_ime=poisci_uporabnisko_ime()
+        )
+    else:
+        p_service.ustvari_portfelj(uporabnisko_ime=uporabnisko_ime, ime_portfelja=ime_portfelja)
+        return bottle.redirect("/moji-portfelji/")
+
+
+@bottle.get("/kriptovaluta/<id_portfelja>/<id_kriptovalute>/")
 def get_kriptovaluta(id_portfelja, id_kriptovalute):
     kriptovaluta = najdi_kriptovaluto(id_portfelja, id_kriptovalute)
     # kriptovaluta = logic.najdi_kriptovaluto(id_portfelja, id_kriptovalute)
@@ -240,6 +252,11 @@ def najdi_kriptovaluto(id_portfelja, id_kriptovalute):
 def poisci_uporabnisko_ime():
     """Poišče in vrne vrednost piškotka `uporabnisko_ime`."""
     return bottle.request.get_cookie(key="uporabnisko_ime", secret=SKRIVNOST)
+
+
+def odjavi_uporabnika():
+    """Izbriše piškotek `uporabniško_ime`."""
+    bottle.response.delete_cookie("uporabnisko_ime", path="/")
 
 
 bottle.run(debug=True, reloader=True)
