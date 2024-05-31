@@ -1,4 +1,4 @@
-% rebase("base.tpl", title="Pregledovalec portfeljev – Registracija")
+% rebase("base.tpl", title="Registracija")
 
 <h1>Registracija</h1>
 <div class="card bg-secondary">
