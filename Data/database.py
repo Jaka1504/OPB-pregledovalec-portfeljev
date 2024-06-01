@@ -30,24 +30,24 @@ class Repo:
         Doda portfelj v tabelo Portfelj.
         """
         cmd = """
-            INSERT into portfelj(ime, lastnik)
-            VALUES (%s, %s)
+            INSERT into portfelj(ime, lastnik, vlozek, gotovina)
+            VALUES (%s, %s, %s, %s)
             RETURNING id
             """
-        data = (portfelj.ime, portfelj.lastnik)
+        data = (portfelj.ime, portfelj.lastnik, portfelj.vlozek, portfelj.gotovina)
         self.cur.execute(cmd, data)
         portfelj.id = self.cur.fetchone()[0]
         self.conn.commit()
 
-    def dodaj_kriptovaluto(self, kriptovaluta : Kriptovaluta):
+    def dodaj_kriptovaluto(self, kripto : Kriptovaluta):
         """
         Doda kriptovaluto v tabelo Kriptovaluta.
         """
         cmd = """
-            INSERT into kriptovaluta(id, kratica, ime, zadnja_cena)
-            VALUES (%s, %s, %s, %s)
+            INSERT into kriptovaluta(id, kratica, ime, zadnja_cena, trend24h, trend7d)
+            VALUES (%s, %s, %s, %s, %s, %s)
             """
-        data = (kriptovaluta.id, kriptovaluta.kratica,  kriptovaluta.ime, kriptovaluta.zadnja_cena)
+        data = (kripto.id, kripto.kratica,  kripto.ime, kripto.zadnja_cena, kripto.trend24h, kripto.trend7d)
         self.cur.execute(cmd, data)
         self.conn.commit()
 
@@ -93,7 +93,7 @@ class Repo:
         Vrne seznam vseh portfeljev uporabnika z uporabniškim imenom uporabnisko_ime iz tabele Portfelj.
         """
         cmd = f"""
-            SELECT id, ime, lastnik from portfelj 
+            SELECT id, ime, lastnik, vlozek, gotovina from portfelj 
             WHERE lastnik = '{uporabnisko_ime}'
             """
         self.cur.execute(cmd)
@@ -105,7 +105,7 @@ class Repo:
         Vrne portfelj z id-jem id iz tabele Portfelj.
         """
         cmd = f"""
-            SELECT id, ime, lastnik from portfelj
+            SELECT id, ime, lastnik, vlozek, gotovina from portfelj
             WHERE id = {id}
             """
         self.cur.execute(cmd)
@@ -207,7 +207,7 @@ class Repo:
         Vrne kriptovaluto z id-jem id iz tabele Kriptovaluta. 
         """
         cmd = f"""
-            SELECT id, kratica, ime, zadnja_cena from kriptovaluta
+            SELECT id, kratica, ime, zadnja_cena, trend24h, trend7d from kriptovaluta
             WHERE id = {id}
             """
         self.cur.execute(cmd)
@@ -219,7 +219,7 @@ class Repo:
         Vrne kriptovaluto s kratico kratica iz tabele Kriptovaluta.
         """
         cmd = f"""
-            SELECT id, kratica, ime, zadnja_cena from kriptovaluta
+            SELECT id, kratica, ime, zadnja_cena, trend24h, trend7d from kriptovaluta
             WHERE kratica = '{kratica}'
             """
         self.cur.execute(cmd)
@@ -232,7 +232,7 @@ class Repo:
         Vrne seznam vseh kriptovalut iz tabele Kriptovaluta.
         """
         cmd = f"""
-            SELECT id, kratica, tip, ime, zadnja_cena from kriptovaluta
+            SELECT id, kratica, tip, ime, zadnja_cena, trend24h, trend7d from kriptovaluta
             """
         self.cur.execute(cmd)
         kriptovalute = [Kriptovaluta.from_dict(s) for s in self.cur.fetchall()]
@@ -253,13 +253,13 @@ class Repo:
         kolicine = dict(self.cur.fetchall())
         return kolicine
 
-    def posodobi_ceno_kriptovalute(self, id, cena):
+    def posodobi_ceno_kriptovalute(self, id, cena, trend24h, trend7d):
         """
         Kriptovaluti z id-jem id iz tabele Kriptovaluta v stolpec zadnja_cena vstavi vrednost cena.
         """
         cmd = f"""
             UPDATE kriptovaluta
-            SET zadnja_cena = {cena}
+            SET zadnja_cena = {cena}, trend24h = {trend24h}, trend7d = {trend7d}
             WHERE id = {id}
             """
         self.cur.execute(cmd)

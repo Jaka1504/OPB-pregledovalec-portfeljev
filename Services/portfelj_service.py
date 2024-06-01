@@ -27,7 +27,7 @@ class PortfeljService():
                 cas = cas,
                 cena = kripto.zadnja_cena
             )
-            self.repo.posodobi_ceno_kriptovalute(kripto.id, kripto.zadnja_cena)
+            self.repo.posodobi_ceno_kriptovalute(kripto.id, kripto.zadnja_cena, kripto.trend24h, kripto.trend7d)
             self.repo.dodaj_ceno_kriptovalute(cenaKriptovalute)
 
         vrednostiPortfeljev = [VrednostPortfelja(
@@ -43,7 +43,9 @@ class PortfeljService():
             lastnik = portfelj.lastnik,
             ime = portfelj.ime,
             vrednost = round(vrednosti[i], 2),
-            kriptovalute=seznam_kolicin[i]
+            kriptovalute = seznam_kolicin[i],
+            vlozek = portfelj.vlozek,
+            gotovina = portfelj.gotovina
         ) for i, portfelj in enumerate(portfelji)]
 
 
@@ -79,8 +81,14 @@ class PortfeljService():
     def ustvari_portfelj(self, uporabnisko_ime, ime_portfelja):
         portfelj = Portfelj(
             lastnik=uporabnisko_ime,
-            ime=ime_portfelja
+            ime=ime_portfelja,
+            gotovina=0,
+            vlozek=0
         )
         self.repo.dodaj_portfelj(portfelj)
         return portfelj
+
+    def dodaj_vlozek(self, id_portfelja, vlozek):
+        """Portfelju z id-jem portfelj doda vložek vlozek."""
+        pass
 

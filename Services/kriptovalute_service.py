@@ -22,8 +22,8 @@ class KriptovaluteService:
         """
         try:
             kriptovaluta = self.repo.dobi_kriptovaluto_po_kratici(kratica)
-            cena = self.api.dobi_cene_kriptovalut([kriptovaluta.id])[0][0].zadnja_cena
-            self.repo.posodobi_ceno_kriptovalute(kriptovaluta.id, cena)
+            kripto = self.api.dobi_cene_kriptovalut([kriptovaluta.id])[0][0]
+            self.repo.posodobi_ceno_kriptovalute(kriptovaluta.id, kripto.zadnja_cena, kripto.trend24h, kripto.trend7d)
         except:
             raise Exception("Kratica ne obstaja.")
 

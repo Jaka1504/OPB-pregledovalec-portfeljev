@@ -23,7 +23,9 @@ class Api:
                 'id': int(d['id']),
                 'kratica': d['symbol'],
                 'ime': d['name'],
-                'zadnja_cena': float(d['price_usd'])
+                'zadnja_cena': float(d['price_usd']),
+                'trend24h' : float(d['percent_change_24h']),
+                'trend7d' : float(d['percent_change_7d'])
                 }) for d in data['data']]
             time.sleep(1)
         return kriptovalute
@@ -43,7 +45,9 @@ class Api:
                 'id': int(d['id']),
                 'kratica': d['symbol'],
                 'ime': d['name'],
-                'zadnja_cena': float(d['price_usd'])
+                'zadnja_cena': float(d['price_usd']),
+                'trend24h' : float(d['percent_change_24h']),
+                'trend7d' : float(d['percent_change_7d'])
                 }) for d in data]
         return (kriptovalute, cas)
         
