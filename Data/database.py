@@ -288,3 +288,16 @@ class Repo:
         data = (vp.portfelj, vp.cas, vp.vrednost)
         self.cur.execute(cmd, data)
         self.conn.commit()
+
+    def dodaj_vlozek_portfelju(self, id, vlozek):
+        """
+        Posodobi, tj. prišteje, vložek vlozek portfelju z id-jem id.
+        """
+        portfelj = self.dobi_portfelj(id)
+        cmd = f"""
+            UPDATE portfelj
+            SET vlozek = {vlozek + portfelj.vlozek}, gotovina = {vlozek + portfelj.gotovina}
+            WHERE id = {id}
+            """
+        self.cur.execute(cmd)
+        self.conn.commit()

@@ -89,6 +89,7 @@ class PortfeljService():
         return portfelj
 
     def dodaj_vlozek(self, id_portfelja, vlozek):
-        """Portfelju z id-jem portfelj doda vložek vlozek."""
-        pass
+        """Portfelju z id-jem portfelj doda vložek vlozek in vrne nov portfelj."""
+        self.repo.dodaj_vlozek_portfelju(id_portfelja, vlozek)
+        return self.repo.dobi_portfelj(id_portfelja)
 
