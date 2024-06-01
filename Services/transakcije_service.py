@@ -17,6 +17,10 @@ class TransakcijeService():
             raise Exception("V portfelju ni dovolj kriptovalute za prodajo!")
         seznam, cas = self.api.dobi_cene_kriptovalut([id_kriptovalute])
         kriptovaluta = seznam[0]
+        portfelj = self.repo.dobi_portfelj(id_portfelja)
+        if kriptovaluta.zadnja_cena * kolicina > portfelj.gotovina:
+            raise Exception("V portfelju ni dovolj denarja za nakup!")
+        self.repo.posodobi_gotovino_v_portfelju(id_portfelja, kriptovaluta.zadnja_cena * kolicina)
         self.repo.posodobi_ceno_kriptovalute(id_kriptovalute, kriptovaluta.zadnja_cena)
 
         transakcija = Transakcija(

@@ -301,3 +301,14 @@ class Repo:
             """
         self.cur.execute(cmd)
         self.conn.commit()
+
+    def posodobi_gotovino_v_portfelju(self, id, gotovina):
+        """Posodobi, tj. prišteje oz. odšteje, gotovino iz portfelja z id-jem id."""
+        portfelj = self.dobi_portfelj(id)
+        cmd = f"""
+            UPDATE portfelj
+            SET gotovina = {gotovina + portfelj.gotovina}
+            WHERE id = {id}
+            """
+        self.cur.execute(cmd)
+        self.conn.commit()
