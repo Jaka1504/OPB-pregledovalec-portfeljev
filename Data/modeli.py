@@ -16,6 +16,8 @@ class Portfelj:
     id : int = field(default=0)
     lastnik : str = field(default="")
     ime : str = field(default="")
+    vlozek : float = field(default=0)
+    gotovina : float = field(default=0)
 
 @dataclass_json
 @dataclass
@@ -25,6 +27,8 @@ class PortfeljDto:
     ime : str = field(default="")
     vrednost : float = field(default="")
     kriptovalute : dict = field(default=None)
+    vlozek : float = field(default=0.)
+    gotovina : float = field(default=0.)
 
 @dataclass_json
 @dataclass
@@ -33,6 +37,8 @@ class Kriptovaluta:
     kratica : str = field(default="")
     ime : str = field(default="")
     zadnja_cena : float = field(default=0.)
+    trend24h : float = field(default=0.)
+    trend7d : float = field(default=0.)
 
 @dataclass_json
 @dataclass
