@@ -30,7 +30,7 @@ class PortfeljService():
             self.repo.posodobi_ceno_kriptovalute(kripto.id, kripto.zadnja_cena, kripto.trend24h, kripto.trend7d)
             self.repo.dodaj_ceno_kriptovalute(cenaKriptovalute)
 
-        for i, portfelj in portfelji:
+        for i, portfelj in enumerate(portfelji):
             vrednosti[i] += portfelj.gotovina
         
         vrednostiPortfeljev = [VrednostPortfelja(
