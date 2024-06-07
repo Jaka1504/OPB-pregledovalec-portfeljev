@@ -37,7 +37,7 @@
           </table>
         </div>
         <div class="col">
-          Graf TBA
+          {{!graf}}
         </div>
       </div>
     </div>

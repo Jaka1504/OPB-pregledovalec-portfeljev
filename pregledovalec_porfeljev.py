@@ -1,6 +1,7 @@
 import UserInterface.bottle as bottle
 from Services.auth_service import AuthService
 from Services.portfelj_service import PortfeljService
+from Services.kriptovalute_service import KriptovaluteService
 
 
 # Da bottle najde template v pravi mapi
@@ -12,6 +13,7 @@ bottle.TEMPLATE_PATH.insert(0, views_path)
 
 auth = AuthService()
 p_service = PortfeljService()
+k_service = KriptovaluteService()
 
 
 SKRIVNOST = "njrelnfkonmakdnenfonmklernmkondakwndwanfo"
@@ -170,10 +172,12 @@ def post_nov_portfelj():
 def get_kriptovaluta(id_portfelja, id_kriptovalute):
     kriptovaluta = najdi_kriptovaluto(id_portfelja, id_kriptovalute)
     # kriptovaluta = logic.najdi_kriptovaluto(id_portfelja, id_kriptovalute)
+    graf = k_service.ustvari_graf_zgodovine_cen(id=id_kriptovalute)
     return bottle.template(
         "kriptovaluta",
         kriptovaluta=kriptovaluta,
-        uporabnisko_ime=poisci_uporabnisko_ime()
+        uporabnisko_ime=poisci_uporabnisko_ime(),
+        graf = graf
         )
 
 #####################################################################################################

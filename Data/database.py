@@ -288,3 +288,21 @@ class Repo:
         data = (vp.portfelj, vp.cas, vp.vrednost)
         self.cur.execute(cmd, data)
         self.conn.commit()
+
+    def dobi_zgodovino_cen_kriptovalute(self, id):
+        """
+        Vrne par seznamov časov in cen kriptovalute z danim id-jem.
+        """
+        cmd = """
+            SELECT cas, cena
+            FROM cenakriptovalute
+            WHERE kriptovaluta = %s
+            """
+        data = (str(id), )
+        self.cur.execute(cmd, data)
+        casi = []
+        cene = []
+        for cas, cena in self.cur.fetchall():
+            casi.append(datetime.strftime(cas, '%Y-%m-%d %H:%M:%S'))
+            cene.append(cena)
+        return (casi, cene)
