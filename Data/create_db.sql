@@ -8,14 +8,18 @@ CREATE TABLE Uporabnik(
 CREATE TABLE Portfelj(
     id SERIAL PRIMARY KEY,
     ime TEXT NOT NULL,
-    lastnik TEXT NOT NULL REFERENCES Uporabnik(uporabnisko_ime)
+    lastnik TEXT NOT NULL REFERENCES Uporabnik(uporabnisko_ime),
+    vlozek FLOAT NOT NULL,
+    gotovina FLOAT NOT NULL
 );
 
 CREATE TABLE Kriptovaluta(
     id INTEGER PRIMARY KEY,
     kratica TEXT NOT NULL,
     ime TEXT NOT NULL,
-    zadnja_cena FLOAT NOT NULL
+    zadnja_cena FLOAT NOT NULL,
+    trend24h FLOAT NOT NULL,
+    trend7d FLOAT NOT NULL
 );
 
 CREATE TABLE Transakcija(
