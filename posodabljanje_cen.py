@@ -12,10 +12,10 @@ def posodobi_cene():
     repo = Repo()
     api = Api()
     kriptovalute = repo.dobi_kriptovalute()
-    print(f"\n\n{datetime.now()} Pobral id-je kriptovalut iz baze.")
+    print(f"{datetime.now()} Pobral id-je kriptovalut iz baze.")
     ids = [kripto.id for kripto in kriptovalute]
     kriptovalute, cas = api.dobi_cene_kriptovalut(ids)
-    print(f"\n\n{datetime.now()} Dobil podatke preko API-ja.")
+    print(f"{datetime.now()} Dobil podatke preko API-ja.")
     for i, id in enumerate(ids):
         kripto = kriptovalute[i]
         # try:
