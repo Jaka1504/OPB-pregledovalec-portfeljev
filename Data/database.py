@@ -232,7 +232,7 @@ class Repo:
         Vrne seznam vseh kriptovalut iz tabele Kriptovaluta.
         """
         cmd = f"""
-            SELECT id, kratica, tip, ime, zadnja_cena, trend24h, trend7d from kriptovaluta
+            SELECT id, kratica, ime, zadnja_cena, trend24h, trend7d from kriptovaluta
             """
         self.cur.execute(cmd)
         kriptovalute = [Kriptovaluta.from_dict(s) for s in self.cur.fetchall()]
