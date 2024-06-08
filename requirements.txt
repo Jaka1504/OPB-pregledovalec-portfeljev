@@ -1,0 +1,10 @@
+requests
+time
+datetime
+psycopg-2
+dataclasses
+dataclasses_json
+hashlib
+plotly
+pandas
+schedule
