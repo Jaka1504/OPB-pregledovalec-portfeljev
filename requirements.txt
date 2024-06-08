@@ -7,4 +7,4 @@ dataclasses_json
 hashlib
 plotly
 pandas
-schedule
+schedule4
