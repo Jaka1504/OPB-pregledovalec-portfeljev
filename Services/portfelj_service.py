@@ -16,12 +16,22 @@ class PortfeljService():
         seznam_kriptovalut = list(set(sum([list(d.keys()) for d in seznam_kolicin], [])))
         kriptovalute, cas = self.api.dobi_cene_kriptovalut(seznam_kriptovalut)
         vrednosti = [0 for _ in portfelji]
+        trend24h = [0 for _ in portfelji]
+        trend7d = [0 for _ in portfelji]
         for kripto in kriptovalute:
             kolicine = [kolicine_dict.get(kripto.id, 0) for kolicine_dict in seznam_kolicin]
             cena = kripto.zadnja_cena
             for i, kolicina in enumerate(kolicine):
                 vrednosti[i] += kolicina * cena
-            
+                trend24h[i] += kripto.trend24h * kolicina * cena
+                trend7d[i] += kripto.trend7d * kolicina * cena
+                print(f"""Kriptovaluta {kripto.id}:
+                    Trend 24h: {kripto.trend24h}
+                    Trend 7d: {kripto.trend7d}
+                    Counter 24h: {trend24h[i]}
+                    Counter 7d: {trend7d[i]}
+                    Counter vrednost: {vrednosti[i]}
+                    """)
             cenaKriptovalute = CenaKriptovalute(
                 kriptovaluta = kripto.id,
                 cas = cas,
@@ -31,6 +41,9 @@ class PortfeljService():
             self.repo.dodaj_ceno_kriptovalute(cenaKriptovalute)
 
         for i, portfelj in enumerate(portfelji):
+            if vrednosti[i] != 0:
+                trend24h[i] /= vrednosti[i]
+                trend7d[i] /= vrednosti[i]
             vrednosti[i] += portfelj.gotovina
         
         vrednostiPortfeljev = [VrednostPortfelja(
@@ -47,6 +60,8 @@ class PortfeljService():
             ime = portfelj.ime,
             vrednost = round(vrednosti[i], 2),
             kriptovalute = seznam_kolicin[i],
+            trend24h = trend24h[i],
+            trend7d = trend7d[i],
             vlozek = portfelj.vlozek,
             gotovina = portfelj.gotovina
         ) for i, portfelj in enumerate(portfelji)]

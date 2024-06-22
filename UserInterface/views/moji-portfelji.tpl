@@ -14,10 +14,11 @@
         <thead class="fixed-head bg-secondary">
           <tr>
             <th scope="col" class="fixed-head">Ime</th>
-            <th scope="col" class="fixed-head text-end">Cena</th>
+            <th scope="col" class="fixed-head text-end">Začetni vložek</th>
             <th scope="col" class="fixed-head text-end">Vrednost</th>
             <th scope="col" class="fixed-head text-end">Donos</th>
-            <th scope="col" class="fixed-head text-end">Trend</th>
+            <th scope="col" class="fixed-head text-end">Trend 24h</th>
+            <th scope="col" class="fixed-head text-end">Trend 7d</th>
             <th scope="col" class="fixed-head text-end">Vpogled</th>
           </tr>
         </thead>
@@ -25,26 +26,33 @@
           % for portfelj in portfelji:
           <tr>
             <th scope="row">
-              {{portfelj["ime"]}}
+              {{portfelj.ime}}
             </th>
             <td class="text-end">
-              {{f"{portfelj["cena"]:.2f}"}} €
+              {{f"{portfelj.vlozek:.2f}"}} €
             </td>
             <td class="text-end">
-              {{f"{portfelj["vrednost"]:.2f}"}} €
+              {{f"{portfelj.vrednost:.2f}"}} €
             </td>
             <td class="text-end">
-              {{f"{portfelj["donos"]:.2f}"}} €
+              {{f"{portfelj.vrednost - portfelj.vlozek:.2f}"}} €
             </td>
             <td class="text-end">
-              % if portfelj["trend"] >= 0: 
-              <span class="besedilo-zeleno">{{f"{portfelj["trend"]:.2f}"}} % ▲</span>
+              % if portfelj.trend24h >= 0: 
+              <span class="besedilo-zeleno">{{f"{portfelj.trend24h:.2f}"}} % ▲</span>
               % else:
-              <span class="besedilo-rdece">{{f"{portfelj["trend"]:.2f}"}} % ▼</span>
+              <span class="besedilo-rdece">{{f"{portfelj.trend24h:.2f}"}} % ▼</span>
+              % end
+            </td>
+            <td class="text-end">
+              % if portfelj.trend7d >= 0: 
+              <span class="besedilo-zeleno">{{f"{portfelj.trend7d:.2f}"}} % ▲</span>
+              % else:
+              <span class="besedilo-rdece">{{f"{portfelj.trend7d:.2f}"}} % ▼</span>
               % end
             </td>
             <td class="text-end text-light">
-              <a class="btn btn-outline-light m-0 px-3 py-0" href="/portfelj/{{portfelj['id']}}/">
+              <a class="btn btn-outline-light m-0 px-3 py-0" href="/portfelj/{{portfelj.id}}/">
                 <img src="/img/search.svg" class="invert"></img>
               </a>
             </td>
@@ -57,21 +65,30 @@
               SKUPAJ
             </th>
             <td class="fixed-foot text-end">
-              {{f"{sum([portfelj["cena"] for portfelj in portfelji]):.2f}"}} €
+              % skupen_vlozek = sum([portfelj.vlozek for portfelj in portfelji])
+              {{f"{skupen_vlozek:.2f}"}} €
             </td>
             <td class="fixed-foot text-end">
-              % skupna_vrednost = sum([portfelj["vrednost"] for portfelj in portfelji])
+              % skupna_vrednost = sum([portfelj.vrednost for portfelj in portfelji])
               {{f"{skupna_vrednost:.2f}"}} €
             </td>
             <td class="fixed-foot text-end">
-              {{f"{sum([portfelj["donos"] for portfelj in portfelji]):.2f}"}} €
+              {{f"{skupna_vrednost - skupen_vlozek:.2f}"}} €
             </td>
             <td class="fixed-foot text-end">
-              % skupen_trend = sum([portfelj["trend"] * portfelj["vrednost"] for portfelj in portfelji]) / skupna_vrednost
-              % if skupen_trend >= 0: 
-              <span class="besedilo-zeleno">{{f"{skupen_trend:.2f}"}} % ▲</span>
+              % skupen_trend24h = sum([portfelj.trend24h * portfelj.vrednost for portfelj in portfelji]) / skupna_vrednost
+              % if skupen_trend24h >= 0: 
+              <span class="besedilo-zeleno">{{f"{skupen_trend24h:.2f}"}} % ▲</span>
               % else:
-              <span class="besedilo-rdece">{{f"{skupen_trend:.2f}"}} % ▼</span>
+              <span class="besedilo-rdece">{{f"{skupen_trend24h:.2f}"}} % ▼</span>
+              % end
+            </td>
+            <td class="fixed-foot text-end">
+              % skupen_trend7d = sum([portfelj.trend7d * portfelj.vrednost for portfelj in portfelji]) / skupna_vrednost
+              % if skupen_trend7d >= 0: 
+              <span class="besedilo-zeleno">{{f"{skupen_trend7d:.2f}"}} % ▲</span>
+              % else:
+              <span class="besedilo-rdece">{{f"{skupen_trend7d:.2f}"}} % ▼</span>
               % end
             </td>
             <td class="fixed-foot">

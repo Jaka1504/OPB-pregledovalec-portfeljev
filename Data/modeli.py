@@ -27,6 +27,8 @@ class PortfeljDto:
     ime : str = field(default="")
     vrednost : float = field(default="")
     kriptovalute : dict = field(default=None)
+    trend24h : float = field(default=0.)
+    trend7d : float = field(default=0.)
     vlozek : float = field(default=0.)
     gotovina : float = field(default=0.)
 
