@@ -1,7 +1,7 @@
-% rebase("base.tpl", title="Portfelj " + portfelj["ime"])
+% rebase("base.tpl", title="Portfelj " + portfelj.ime)
 
 
-<h1>Portfelj {{portfelj["ime"]}}</h1>
+<h1>Portfelj {{portfelj.ime}}</h1>
 <div class="card bg-secondary">
   <div class="card-header">
     <p class="mb-0">
@@ -16,15 +16,16 @@
             <th scope="col" class="fixed-head">Kriptovaluta</th>
             <th scope="col" class="fixed-head">Kratica</th>
             <th scope="col" class="fixed-head text-end">Količina</th>
-            <th scope="col" class="fixed-head text-end">Cena</th>
+            <!-- <th scope="col" class="fixed-head text-end">Cena</th> -->
             <th scope="col" class="fixed-head text-end">Vrednost</th>
-            <th scope="col" class="fixed-head text-end">Donos</th>
-            <th scope="col" class="fixed-head text-end">Trend</th>
+            <!-- <th scope="col" class="fixed-head text-end">Donos</th> -->
+            <th scope="col" class="fixed-head text-end">Trend 24h</th>
+            <th scope="col" class="fixed-head text-end">Trend 7d</th>
             <th scope="col" class="fixed-head text-end">Vpogled</th>
           </tr>
         </thead>
         <tbody>
-          % for kriptovaluta in portfelj["kriptovalute"]:
+          % for kriptovaluta in portfelj.kriptovalute.values():
           <tr>
             <th scope="row">
               {{kriptovaluta["ime"]}}
@@ -36,23 +37,24 @@
               {{f"{kriptovaluta["kolicina"]:.6f}"}}
             </td>
             <td class="text-end">
-              {{f"{kriptovaluta["cena"]:.2f}"}} €
-            </td>
-            <td class="text-end">
               {{f"{kriptovaluta["vrednost"]:.2f}"}} €
             </td>
             <td class="text-end">
-              {{f"{kriptovaluta["donos"]:.2f}"}} €
+              % if kriptovaluta["trend24h"] >= 0: 
+              <span class="besedilo-zeleno">{{f"{kriptovaluta["trend24h"]:.2f}"}} % ▲</span>
+              % else:
+              <span class="besedilo-rdece">{{f"{kriptovaluta["trend24h"]:.2f}"}} % ▼</span>
+              % end
             </td>
             <td class="text-end">
-              % if kriptovaluta["trend"] >= 0: 
-              <span class="besedilo-zeleno">{{f"{kriptovaluta["trend"]:.2f}"}} % ▲</span>
+              % if kriptovaluta["trend7d"] >= 0: 
+              <span class="besedilo-zeleno">{{f"{kriptovaluta["trend7d"]:.2f}"}} % ▲</span>
               % else:
-              <span class="besedilo-rdece">{{f"{kriptovaluta["trend"]:.2f}"}} % ▼</span>
+              <span class="besedilo-rdece">{{f"{kriptovaluta["trend7d"]:.2f}"}} % ▼</span>
               % end
             </td>
             <td class="text-end text-light">
-              <a class="btn btn-outline-light m-0 px-3 py-0" href="/kriptovaluta/{{portfelj['id']}}/{{kriptovaluta['id']}}/">
+              <a class="btn btn-outline-light m-0 px-3 py-0" href="/kriptovaluta/{{portfelj.id}}/{{kriptovaluta['id']}}/">
                 <img src="/img/search.svg" class="invert"></img>
               </a>
             </td>
@@ -67,21 +69,23 @@
             <td class="fixed-foot"></td> <!-- kratica -->
             <td class="fixed-foot"></td> <!-- kolicina -->
             <td class="fixed-foot text-end">
-              {{f"{sum([kriptovaluta["cena"] for kriptovaluta in portfelj["kriptovalute"]]):.2f}"}} €
-            </td>
-            <td class="fixed-foot text-end">
-              % skupna_vrednost = sum([kriptovaluta["vrednost"] for kriptovaluta in portfelj["kriptovalute"]])
+              % skupna_vrednost = sum([kriptovaluta["vrednost"] for kriptovaluta in portfelj.kriptovalute.values()])
               {{f"{skupna_vrednost:.2f}"}} €
             </td>
             <td class="fixed-foot text-end">
-              {{f"{sum([kriptovaluta["donos"] for kriptovaluta in portfelj["kriptovalute"]]):.2f}"}} €
+              % skupen_trend24h = sum([kriptovaluta["trend24h"] * kriptovaluta["vrednost"] for kriptovaluta in portfelj.kriptovalute.values()]) / skupna_vrednost if skupna_vrednost else 0
+              % if skupen_trend24h >= 0: 
+              <span class="besedilo-zeleno">{{f"{skupen_trend24h:.2f}"}} % ▲</span>
+              % else:
+              <span class="besedilo-rdece">{{f"{skupen_trend24h:.2f}"}} % ▼</span>
+              % end
             </td>
             <td class="fixed-foot text-end">
-              % skupen_trend = sum([kriptovaluta["trend"] * kriptovaluta["vrednost"] for kriptovaluta in portfelj["kriptovalute"]]) / skupna_vrednost
-              % if skupen_trend >= 0: 
-              <span class="besedilo-zeleno">{{f"{skupen_trend:.2f}"}} % ▲</span>
+              % skupen_trend7d = sum([kriptovaluta["trend7d"] * kriptovaluta["vrednost"] for kriptovaluta in portfelj.kriptovalute.values()]) / skupna_vrednost  if skupna_vrednost else 0
+              % if skupen_trend7d >= 0: 
+              <span class="besedilo-zeleno">{{f"{skupen_trend7d:.2f}"}} % ▲</span>
               % else:
-              <span class="besedilo-rdece">{{f"{skupen_trend:.2f}"}} % ▼</span>
+              <span class="besedilo-rdece">{{f"{skupen_trend7d:.2f}"}} % ▼</span>
               % end
             </td>
             <td class="fixed-foot"></td> <!-- vpogled -->

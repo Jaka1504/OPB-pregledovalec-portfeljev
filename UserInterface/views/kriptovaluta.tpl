@@ -1,7 +1,7 @@
 % rebase("base.tpl", title="Kriptovaluta " + kriptovaluta["ime"])
 
-% skupna_kolicina = sum([transakcija["kolicina"] for transakcija in kriptovaluta["transakcije"]])
-% skupna_cena = sum([transakcija["kolicina"] * transakcija["cena_enote"] for transakcija in kriptovaluta["transakcije"]])
+% skupna_kolicina = sum([transakcija.kolicina for transakcija in kriptovaluta["transakcije"]])
+% skupna_cena = sum([transakcija.kolicina * transakcija.cena for transakcija in kriptovaluta["transakcije"]])
 % skupna_vrednost = skupna_kolicina * kriptovaluta["vrednost_enote"]
 % skupen_donos = skupna_vrednost - skupna_cena
 
@@ -21,18 +21,28 @@
               <tr><td class="py-0">Količina</td><td class="py-0">{{f"{skupna_kolicina:.6f}"}}</td></tr>
               <tr><td class="py-0">Vrednost ene enote</td><td class="py-0">{{f"{kriptovaluta["vrednost_enote"]:.2f}"}}</td></tr>
               <tr>
-                <td class="py-0">Trend</td>
+                <td class="py-0">Trend24h</td>
                 <td class="py-0">
-                  % if kriptovaluta["trend"] >= 0: 
-                  <span class="besedilo-zeleno">{{f"{kriptovaluta["trend"]:.2f}"}} % ▲</span>
+                  % if kriptovaluta["trend24h"] >= 0: 
+                  <span class="besedilo-zeleno">{{f"{kriptovaluta["trend24h"]:.2f}"}} % ▲</span>
                   % else:
-                  <span class="besedilo-rdece">{{f"{kriptovaluta["trend"]:.2f}"}} % ▼</span>
+                  <span class="besedilo-rdece">{{f"{kriptovaluta["trend24h"]:.2f}"}} % ▼</span>
                   % end
                 </td>
               </tr>
-              <tr><td class="py-0">Skupen vložek</td><td class="py-0">{{f"{skupna_cena:.2f}"}}</td></tr>
+              <tr>
+                <td class="py-0">Trend7d</td>
+                <td class="py-0">
+                  % if kriptovaluta["trend7d"] >= 0: 
+                  <span class="besedilo-zeleno">{{f"{kriptovaluta["trend7d"]:.2f}"}} % ▲</span>
+                  % else:
+                  <span class="besedilo-rdece">{{f"{kriptovaluta["trend7d"]:.2f}"}} % ▼</span>
+                  % end
+                </td>
+              </tr>
+              <!-- VLOŽEK -->
               <tr><td class="py-0">Skupna vrednost</td><td class="py-0">{{f"{skupna_vrednost:.2f}"}}</td></tr>
-              <tr><td class="py-0">Donos</td><td class="py-0">{{f"{skupen_donos:.2f}"}}</td></tr>
+              <!-- DONOS -->
             </tbody>
           </table>
         </div>
@@ -50,21 +60,6 @@
 
 <div class="card bg-secondary">
   <div class="card-header">
-    <!-- <p class="mb-0">Ime: {{kriptovaluta["ime"]}}</p>
-    <p class="mb-0">Kratica: {{kriptovaluta["kratica"]}}</p>
-    <p class="mb-0">Količina: {{f"{skupna_kolicina:.6f}"}}</p>
-    <p class="mb-0">Vrednost ene enote: {{f"{kriptovaluta["vrednost_enote"]:.2f}"}}</p>
-    <p class="mb-0">Trend:
-    % if kriptovaluta["trend"] >= 0: 
-    <span class="besedilo-zeleno">{{f"{kriptovaluta["trend"]:.2f}"}} % ▲</span>
-    % else:
-    <span class="besedilo-rdece">{{f"{kriptovaluta["trend"]:.2f}"}} % ▼</span>
-    % end
-    </p>
-    <p class="mb-0">Skupen vložek: {{f"{skupna_cena:.2f}"}}</p>
-    <p class="mb-0">Skupna vrednost: {{f"{skupna_vrednost:.2f}"}}</p>
-    <p class="mb-0">Donos: {{f"{skupen_donos:.2f}"}}</p>
-    <p class="mb-0">Seznam transakcij:</p> -->
     <h3>Seznam transakcij</h3>
   </div>
   <div class="card-body py-0">
@@ -84,19 +79,19 @@
           % for transakcija in kriptovaluta["transakcije"]:
           <tr>
             <td class="py-0">
-              {{transakcija["datum"]}}
+              {{transakcija.cas}}
             </td>
             <td class="py-0 text-end">
-              {{f"{transakcija["cena_enote"]:.2f}"}} €
+              {{f"{transakcija.cena:.2f}"}} €
             </td>
             <td class="py-0 text-end">
-              {{f"{transakcija["kolicina"]:.6f}"}}
+              {{f"{transakcija.kolicina:.6f}"}}
             </td>
-            % cena = transakcija["kolicina"] * transakcija["cena_enote"]
+            % cena = transakcija.kolicina * transakcija.cena
             <td class="py-0 text-end">
               {{f"{cena:.2f}"}} €
             </td>
-            % vrednost = transakcija["kolicina"] * kriptovaluta["vrednost_enote"]
+            % vrednost = transakcija.kolicina * kriptovaluta["vrednost_enote"]
             <td class="py-0 text-end">
               {{f"{vrednost:.2f}"}} €
             </td>
@@ -134,7 +129,7 @@
         <a class="btn btn-dark btn-block" href="/">Posodobi stanje</a>
       </div>
       <div class="col d-grid">
-        <a class="btn btn-dark btn-block" href="/">Dodaj novo transakcijo</a>
+        <a class="btn btn-dark btn-block" href="/">Dodaj transakcijo</a>
       </div>
     </div>
   </div>

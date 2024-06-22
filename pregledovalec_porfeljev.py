@@ -2,6 +2,7 @@ import UserInterface.bottle as bottle
 from Services.auth_service import AuthService
 from Services.portfelj_service import PortfeljService
 from Services.kriptovalute_service import KriptovaluteService
+from Services.transakcije_service import TransakcijeService
 
 
 # Da bottle najde template v pravi mapi
@@ -14,6 +15,7 @@ bottle.TEMPLATE_PATH.insert(0, views_path)
 auth = AuthService()
 p_service = PortfeljService()
 k_service = KriptovaluteService()
+t_service = TransakcijeService()
 
 
 SKRIVNOST = "njrelnfkonmakdnenfonmklernmkondakwndwanfo"
@@ -37,25 +39,12 @@ def get_index():
 @bottle.get("/moji-portfelji/")
 def get_moji_portfelji():
     '''TODO'''
-    portfelj1 = {
-        "id" : 1,
-        "ime" : "kripto:)",
-        "cena" : 2.13,
-        "vrednost" : 103.14,
-        "donos" : 101.01,
-        "trend" : 0.4
-    }
-    portfelj2 = {
-        "id" : 2,
-        "ime" : "slovenske_delnice",
-        "cena" : 205.15,
-        "vrednost" : 198.12,
-        "donos" : -7.03,
-        "trend" : -1.5
-    }
-    # portfelji = [portfelj1, portfelj2, portfelj1, portfelj2, portfelj1, portfelj2, portfelj1, portfelj2, portfelj1, portfelj2, portfelj1]
-    portfelji = p_service.najdi_vse_portfelje(poisci_uporabnisko_ime())
-    return bottle.template("moji-portfelji-reduciran", portfelji=portfelji, uporabnisko_ime=poisci_uporabnisko_ime())
+    uporabnisko_ime = poisci_uporabnisko_ime()
+    if not uporabnisko_ime:
+        bottle.redirect("/prijava/")
+    else:
+        portfelji = p_service.najdi_vse_portfelje(uporabnisko_ime)
+        return bottle.template("moji-portfelji-reduciran", portfelji=portfelji, uporabnisko_ime=poisci_uporabnisko_ime())
 
 
 @bottle.get("/portfelj/<id_portfelja>/")
@@ -184,72 +173,72 @@ def get_kriptovaluta(id_portfelja, id_kriptovalute):
 
 def najdi_portfelj(id_portfelja):
     '''TODO'''
-    kriptovaluta1 = {
-                "id" : 1,
-                "ime" : "Bitcoin",
-                "kratica" : "BTC",
-                "cena" : 105.20,
-                "kolicina" : 0.002,
-                "vrednost": 113.69,
-                "donos" : 8.49,
-                "trend" : 0.19
-            }
-    kriptovaluta2 = {
-                "id" : 2,
-                "ime" : "Jakacoin",
-                "kratica" : "JKC",
-                "cena" : 95.20,
-                "kolicina" : 4.20,
-                "vrednost": 153.69,
-                "donos" : 59.57,
-                "trend" : 1.03
-            }
-    portfelj1 = {
-        "id" : 1,
-        "ime" : "kripto:)",
-        "kriptovalute" : [kriptovaluta1, kriptovaluta2, kriptovaluta1, kriptovaluta2, kriptovaluta1, kriptovaluta2, kriptovaluta1, kriptovaluta2, kriptovaluta1, kriptovaluta2, kriptovaluta1, kriptovaluta2, kriptovaluta1]
-    }
-    return portfelj1
+    portfelj = p_service.najdi_portfelj(id_portfelja=id_portfelja)
+    for id_kripto, kolicina in portfelj.kriptovalute.items():
+        kriptovaluta = k_service.dobi_kriptovaluto(id_kripto)
+        portfelj.kriptovalute[id_kripto] = {
+            "id" : id_kripto,
+            "ime" : kriptovaluta.ime,
+            "kratica" : kriptovaluta.kratica,
+            "kolicina" : kolicina,
+            "vrednost" : kolicina * kriptovaluta.zadnja_cena,
+            "trend24h" : kriptovaluta.trend24h,                     # WIP
+            "trend7d" : kriptovaluta.trend7d
+        }
+    return portfelj
 
 def najdi_kriptovaluto(id_portfelja, id_kriptovalute):
     '''TODO'''
-    transakcija1 = {
-                "id" : 1,
-                "cena_enote" : 20105.20,
-                "kolicina" : 0.002,
-                "datum" : "13. 5. 2024",
-            }
-    transakcija2 = {
-                "id" : 2,
-                "cena_enote" : 19595.20,
-                "kolicina" : 0.00420,
-                "datum" : "11. 9. 2001",
-            }
+    portfelj = p_service.najdi_portfelj(id_portfelja)
+    kripto = k_service.dobi_kriptovaluto(id_kriptovalute)
+    transakcije = t_service.dobi_transakcije_v_portfelju(id_portfelja, id_kriptovalute)
     kriptovaluta = {
-        "ime": "Bitcoin",
-        "kratica": "BTC",
-        "ime_portfelja": "kripto:)",
-        "vrednost_enote": 18697.65,
-        "trend": 0.64,
-        "transakcije": [
-            transakcija1,
-            transakcija2,
-            transakcija1,
-            transakcija2,
-            transakcija1,
-            transakcija2,
-            transakcija1,
-            transakcija2,
-            transakcija1,
-            transakcija2,
-            transakcija1,
-            transakcija2,
-            transakcija1,
-            transakcija2,
-            transakcija1,
-            transakcija2
-        ]
+        "ime": kripto.ime,
+        "kratica": kripto.kratica,
+        "ime_portfelja": portfelj.ime,
+        "vrednost_enote": kripto.zadnja_cena,
+        "trend24h": kripto.trend24h,
+        "trend7d": kripto.trend7d,
+        "transakcije": transakcije
     }
+
+    # transakcija1 = {
+    #             "id" : 1,
+    #             "cena_enote" : 20105.20,
+    #             "kolicina" : 0.002,
+    #             "datum" : "13. 5. 2024",
+    #         }
+    # transakcija2 = {
+    #             "id" : 2,
+    #             "cena_enote" : 19595.20,
+    #             "kolicina" : 0.00420,
+    #             "datum" : "11. 9. 2001",
+    #         }
+    # kriptovaluta = {
+    #     "ime": "Bitcoin",
+    #     "kratica": "BTC",
+    #     "ime_portfelja": "kripto:)",
+    #     "vrednost_enote": 18697.65,
+    #     "trend": 0.64,
+    #     "transakcije": [
+    #         transakcija1,
+    #         transakcija2,
+    #         transakcija1,
+    #         transakcija2,
+    #         transakcija1,
+    #         transakcija2,
+    #         transakcija1,
+    #         transakcija2,
+    #         transakcija1,
+    #         transakcija2,
+    #         transakcija1,
+    #         transakcija2,
+    #         transakcija1,
+    #         transakcija2,
+    #         transakcija1,
+    #         transakcija2
+    #     ]
+    # }
     return kriptovaluta
 
 

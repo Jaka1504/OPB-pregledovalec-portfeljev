@@ -31,7 +31,7 @@ def posodobi_cene():
         else:
             print(f"{datetime.now()} Posodobil {i + 1} / {len(kriptovalute)}", end="\n")
         # except:
-        #     pass
+        #     passN
 
     print(f"{datetime.now()} Končano posodabljanje cen.\n\n")
     print("=====================================================")
