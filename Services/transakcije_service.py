@@ -14,13 +14,13 @@ class TransakcijeService():
         portfelju dovolj kriptovalute."""
         kolicine = self.repo.dobi_kolicino_kriptovalut_v_portfelju(id_portfelja)
         if kolicina + kolicine.get(id_kriptovalute, 0) < 0:
-            raise Exception("V portfelju ni dovolj kriptovalute za prodajo!")
+            return "V portfelju ni dovolj kriptovalute za prodajo!"
         seznam, cas = self.api.dobi_cene_kriptovalut([id_kriptovalute])
         kriptovaluta = seznam[0]
         portfelj = self.repo.dobi_portfelj(id_portfelja)
         if kriptovaluta.zadnja_cena * kolicina > portfelj.gotovina:
-            raise Exception("V portfelju ni dovolj denarja za nakup!")
-        self.repo.posodobi_gotovino_v_portfelju(id_portfelja, kriptovaluta.zadnja_cena * kolicina)
+            return "V portfelju ni dovolj denarja za nakup!"
+        self.repo.posodobi_gotovino_v_portfelju(id_portfelja, -kriptovaluta.zadnja_cena * kolicina)
         self.repo.posodobi_ceno_kriptovalute(id_kriptovalute, kriptovaluta.zadnja_cena, kriptovaluta.trend24h, kriptovaluta.trend7d)
 
         transakcija = Transakcija(
@@ -37,7 +37,7 @@ class TransakcijeService():
             cena=kriptovaluta.zadnja_cena
         )
         self.repo.dodaj_ceno_kriptovalute(ck)
-        return transakcija
+        return None
 
     def dobi_transakcije_v_portfelju(self, id_portfelja, id_kripto=None):
         """Če je id_kripto=None, vrne seznam vseh transakcij v portfelju z id-jem id portfelja, sicer vrne 

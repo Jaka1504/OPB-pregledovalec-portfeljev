@@ -175,14 +175,10 @@ def post_nova_transakcija():
     portfelj = int(bottle.request.forms.getunicode("portfelj"))
     kriptovaluta = int(bottle.request.forms.getunicode("kriptovaluta"))
     kolicina = float(bottle.request.forms.getunicode("kolicina"))
-    try:
-        t_service.naredi_transakcijo(id_kriptovalute=kriptovaluta, id_portfelja=portfelj, kolicina=kolicina)
-        bottle.redirect(f"/kriptovaluta/{portfelj}/{kriptovaluta}/")
-    except Exception:
-        if kolicina > 0:        # kupujemo => ni dovolj denarja
-            napaka = "Na tem portfelju ni dovolj denarja. Povišajte vložek ali izberite drugo količino kriptovalute."
-        else:                   # prodajamo => ni dovolj kriptovalute
-            napaka = "Na tem portfelju ni dovolj enot izbrane kriptovalute."
+    napaka = t_service.naredi_transakcijo(id_kriptovalute=kriptovaluta, id_portfelja=portfelj, kolicina=kolicina)
+    if napaka is None:
+        return bottle.redirect(f"/kriptovaluta/{portfelj}/{kriptovaluta}/")
+    else:
         uporabnisko_ime=poisci_uporabnisko_ime()
         vse_kriptovalute=k_service.dobi_kriptovalute()
         portfelji = p_service.najdi_vse_portfelje(uporabnisko_ime)
