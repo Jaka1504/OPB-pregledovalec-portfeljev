@@ -143,6 +143,7 @@ def get_nov_portfelj():
 @bottle.post("/nov-portfelj/")
 def post_nov_portfelj():
     ime_portfelja = bottle.request.forms.getunicode("ime_portfelja")
+    vlozek = float(bottle.request.forms.getunicode("vlozek"))
     uporabnisko_ime = poisci_uporabnisko_ime()
     napaka = None
     imena_portfeljev=[portfelj.ime for portfelj in p_service.najdi_vse_portfelje(uporabnisko_ime=uporabnisko_ime)]
@@ -152,7 +153,8 @@ def post_nov_portfelj():
             "nov-portfelj", napaka=napaka, uporabnisko_ime=poisci_uporabnisko_ime()
         )
     else:
-        p_service.ustvari_portfelj(uporabnisko_ime=uporabnisko_ime, ime_portfelja=ime_portfelja)
+        nov_portfelj = p_service.ustvari_portfelj(uporabnisko_ime=uporabnisko_ime, ime_portfelja=ime_portfelja)
+        p_service.dodaj_vlozek(nov_portfelj.id, vlozek)
         return bottle.redirect("/moji-portfelji/")
 
 

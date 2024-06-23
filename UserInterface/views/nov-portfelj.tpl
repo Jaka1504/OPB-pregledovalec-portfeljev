@@ -5,8 +5,10 @@
   <div class="card-body">
     <form action="/nov-portfelj/" method="post">
       <div class="form-group">
-        <label for="ime_portfelja">Ime portfelja:</label>
+        <label for="vlozek">Ime portfelja:</label>
         <input type="text" class="form-control" id="ime_portfelja" name="ime_portfelja" placeholder="Ime portfelja" minlength="2" maxlength="30">
+        <label for="vlozek">Začetni vložek (USD):</label>
+        <input type="number" class="form-control" id="vlozek" name="vlozek" placeholder="Začetni vložek" step="0.01" min="0">
       </div>
       % if napaka:
       <div class="alert alert-danger py-1 m-0 fs-6">{{napaka}}</div>
