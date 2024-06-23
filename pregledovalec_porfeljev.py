@@ -156,6 +156,45 @@ def post_nov_portfelj():
         return bottle.redirect("/moji-portfelji/")
 
 
+@bottle.get("/nova-transakcija/")
+def get_nova_transakcija():
+    uporabnisko_ime=poisci_uporabnisko_ime()
+    vse_kriptovalute=k_service.dobi_kriptovalute()
+    portfelji = p_service.najdi_vse_portfelje(uporabnisko_ime)
+    return bottle.template(
+        "nova-transakcija",
+        napaka=None,
+        vse_kriptovalute=vse_kriptovalute,
+        portfelji=portfelji,
+        uporabnisko_ime=uporabnisko_ime,
+    )
+
+
+@bottle.post("/nova-transakcija/")
+def post_nova_transakcija():
+    portfelj = int(bottle.request.forms.getunicode("portfelj"))
+    kriptovaluta = int(bottle.request.forms.getunicode("kriptovaluta"))
+    kolicina = float(bottle.request.forms.getunicode("kolicina"))
+    try:
+        t_service.naredi_transakcijo(id_kriptovalute=kriptovaluta, id_portfelja=portfelj, kolicina=kolicina)
+        bottle.redirect(f"/kriptovaluta/{portfelj}/{kriptovaluta}/")
+    except Exception:
+        if kolicina > 0:        # kupujemo => ni dovolj denarja
+            napaka = "Na tem portfelju ni dovolj denarja. Povišajte vložek ali izberite drugo količino kriptovalute."
+        else:                   # prodajamo => ni dovolj kriptovalute
+            napaka = "Na tem portfelju ni dovolj enot izbrane kriptovalute."
+        uporabnisko_ime=poisci_uporabnisko_ime()
+        vse_kriptovalute=k_service.dobi_kriptovalute()
+        portfelji = p_service.najdi_vse_portfelje(uporabnisko_ime)
+        return bottle.template(
+            "nova-transakcija",
+            napaka=napaka,
+            vse_kriptovalute=vse_kriptovalute,
+            portfelji=portfelji,
+            uporabnisko_ime=uporabnisko_ime,
+        )
+
+
 @bottle.get("/kriptovaluta/<id_portfelja>/<id_kriptovalute>/")
 def get_kriptovaluta(id_portfelja, id_kriptovalute):
     kriptovaluta = najdi_kriptovaluto(id_portfelja, id_kriptovalute)

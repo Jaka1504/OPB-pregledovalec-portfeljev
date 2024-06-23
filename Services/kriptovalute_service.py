@@ -35,6 +35,13 @@ class KriptovaluteService:
         kriptovaluta = self.repo.dobi_kriptovaluto(id)
         return kriptovaluta
     
+
+    def dobi_kriptovalute(self):
+        """
+        Vrne seznam vseh kriptovalut iz tabele Kriptovaluta.
+        """
+        return self.repo.dobi_kriptovalute()
+    
     
     def ustvari_graf_zgodovine_cen(self, id):
         """Vrne objekt, ki ga vstavimo v HTML datoteko, da prikaže graf zgodovine cene kriptovalute z danim id-jem"""

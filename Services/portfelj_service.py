@@ -25,13 +25,6 @@ class PortfeljService():
                 vrednosti[i] += kolicina * cena
                 trend24h[i] += kripto.trend24h * kolicina * cena
                 trend7d[i] += kripto.trend7d * kolicina * cena
-                print(f"""Kriptovaluta {kripto.id}:
-                    Trend 24h: {kripto.trend24h}
-                    Trend 7d: {kripto.trend7d}
-                    Counter 24h: {trend24h[i]}
-                    Counter 7d: {trend7d[i]}
-                    Counter vrednost: {vrednosti[i]}
-                    """)
             cenaKriptovalute = CenaKriptovalute(
                 kriptovaluta = kripto.id,
                 cas = cas,

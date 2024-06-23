@@ -98,7 +98,7 @@
         <a class="btn btn-dark btn-block" href="/">Posodobi stanje</a>
       </div>
       <div class="col d-grid">
-        <a class="btn btn-dark btn-block" href="/">Dodaj novo transakcijo</a>
+        <a class="btn btn-dark btn-block" href="/nova-transakcija/">Dodaj novo transakcijo</a>
       </div>
     </div>
   </div>
