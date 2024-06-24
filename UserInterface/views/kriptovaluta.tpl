@@ -19,9 +19,9 @@
               <tr><td class="py-0">Ime</td><td class="py-0">{{kriptovaluta["ime"]}}</td></tr>
               <tr><td class="py-0">Kratica</td><td class="py-0">{{kriptovaluta["kratica"]}}</td></tr>
               <tr><td class="py-0">Količina</td><td class="py-0">{{f"{skupna_kolicina:.6f}"}}</td></tr>
-              <tr><td class="py-0">Vrednost ene enote</td><td class="py-0">{{f"{kriptovaluta["vrednost_enote"]:.2f}"}}</td></tr>
+              <tr><td class="py-0">Vrednost ene enote</td><td class="py-0">{{f"{kriptovaluta["vrednost_enote"]:.2f}"}} $</td></tr>
               <tr>
-                <td class="py-0">Trend24h</td>
+                <td class="py-0">Trend 24h</td>
                 <td class="py-0">
                   % if kriptovaluta["trend24h"] >= 0: 
                   <span class="besedilo-zeleno">{{f"{kriptovaluta["trend24h"]:.2f}"}} % ▲</span>
@@ -31,7 +31,7 @@
                 </td>
               </tr>
               <tr>
-                <td class="py-0">Trend7d</td>
+                <td class="py-0">Trend 7d</td>
                 <td class="py-0">
                   % if kriptovaluta["trend7d"] >= 0: 
                   <span class="besedilo-zeleno">{{f"{kriptovaluta["trend7d"]:.2f}"}} % ▲</span>
@@ -41,7 +41,7 @@
                 </td>
               </tr>
               <!-- VLOŽEK -->
-              <tr><td class="py-0">Skupna vrednost</td><td class="py-0">{{f"{skupna_vrednost:.2f}"}}</td></tr>
+              <tr><td class="py-0">Skupna vrednost</td><td class="py-0">{{f"{skupna_vrednost:.2f}"}} $</td></tr>
               <!-- DONOS -->
             </tbody>
           </table>
@@ -67,11 +67,11 @@
       <table class="table text-light">
         <thead class="fixed-head bg-secondary">
           <tr>
-            <th scope="col" class="fixed-head">Datum nakupa</th>
+            <th scope="col" class="fixed-head">Čas nakupa</th>
             <th scope="col" class="fixed-head text-end">Cena enote</th>
             <th scope="col" class="fixed-head text-end">Količina</th>
-            <th scope="col" class="fixed-head text-end">Cena</th>
-            <th scope="col" class="fixed-head text-end">Vrednost</th>
+            <th scope="col" class="fixed-head text-end">Cena nakupa / prodaje</th>
+            <th scope="col" class="fixed-head text-end">Trenutna vrednost</th>
             <th scope="col" class="fixed-head text-end">Donos</th>
           </tr>
         </thead>
@@ -82,22 +82,22 @@
               {{transakcija.cas}}
             </td>
             <td class="py-0 text-end">
-              {{f"{transakcija.cena:.2f}"}} €
+              {{f"{transakcija.cena:.2f}"}} $
             </td>
             <td class="py-0 text-end">
               {{f"{transakcija.kolicina:.6f}"}}
             </td>
             % cena = transakcija.kolicina * transakcija.cena
             <td class="py-0 text-end">
-              {{f"{cena:.2f}"}} €
+              {{f"{cena:.2f}"}} $
             </td>
             % vrednost = transakcija.kolicina * kriptovaluta["vrednost_enote"]
             <td class="py-0 text-end">
-              {{f"{vrednost:.2f}"}} €
+              {{f"{vrednost:.2f}"}} $
             </td>
             % donos = vrednost - cena
             <td class="py-0 text-end">
-              {{f"{donos:.2f}"}} €
+              {{f"{donos:.2f}"}} $
             </td>
           </tr>
           % end
@@ -112,13 +112,13 @@
               {{f"{skupna_kolicina:.6f}"}}
             </td>
             <td class="fixed-foot text-end">
-              {{f"{skupna_cena:.2f}"}} €
+              {{f"{skupna_cena:.2f}"}} $
             </td>
             <td class="fixed-foot text-end">
-              {{f"{skupna_vrednost:.2f}"}} €
+              {{f"{skupna_vrednost:.2f}"}} $
             </td>
             <td class="fixed-foot text-end">
-              {{f"{skupen_donos:.2f}"}} €
+              {{f"{skupen_donos:.2f}"}} $
             </td>
           </tr>
         </tfoot>

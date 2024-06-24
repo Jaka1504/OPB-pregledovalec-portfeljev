@@ -37,7 +37,7 @@
               {{f"{kriptovaluta["kolicina"]:.6f}"}}
             </td>
             <td class="text-end">
-              {{f"{kriptovaluta["vrednost"]:.2f}"}} €
+              {{f"{kriptovaluta["vrednost"]:.2f}"}} $
             </td>
             <td class="text-end">
               % if kriptovaluta["trend24h"] >= 0: 
@@ -70,7 +70,7 @@
             <td class="fixed-foot"></td> <!-- kolicina -->
             <td class="fixed-foot text-end">
               % skupna_vrednost = sum([kriptovaluta["vrednost"] for kriptovaluta in portfelj.kriptovalute.values()])
-              {{f"{skupna_vrednost:.2f}"}} €
+              {{f"{skupna_vrednost:.2f}"}} $
             </td>
             <td class="fixed-foot text-end">
               % skupen_trend24h = sum([kriptovaluta["trend24h"] * kriptovaluta["vrednost"] for kriptovaluta in portfelj.kriptovalute.values()]) / skupna_vrednost if skupna_vrednost else 0

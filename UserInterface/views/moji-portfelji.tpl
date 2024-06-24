@@ -29,13 +29,13 @@
               {{portfelj.ime}}
             </th>
             <td class="text-end">
-              {{f"{portfelj.vlozek:.2f}"}} €
+              {{f"{portfelj.vlozek:.2f}"}} $
             </td>
             <td class="text-end">
-              {{f"{portfelj.vrednost:.2f}"}} €
+              {{f"{portfelj.vrednost:.2f}"}} $
             </td>
             <td class="text-end">
-              {{f"{portfelj.vrednost - portfelj.vlozek:.2f}"}} €
+              {{f"{portfelj.vrednost - portfelj.vlozek:.2f}"}} $
             </td>
             <td class="text-end">
               % if portfelj.trend24h >= 0: 
@@ -66,14 +66,14 @@
             </th>
             <td class="fixed-foot text-end">
               % skupen_vlozek = sum([portfelj.vlozek for portfelj in portfelji])
-              {{f"{skupen_vlozek:.2f}"}} €
+              {{f"{skupen_vlozek:.2f}"}} $
             </td>
             <td class="fixed-foot text-end">
               % skupna_vrednost = sum([portfelj.vrednost for portfelj in portfelji])
-              {{f"{skupna_vrednost:.2f}"}} €
+              {{f"{skupna_vrednost:.2f}"}} $
             </td>
             <td class="fixed-foot text-end">
-              {{f"{skupna_vrednost - skupen_vlozek:.2f}"}} €
+              {{f"{skupna_vrednost - skupen_vlozek:.2f}"}} $
             </td>
             <td class="fixed-foot text-end">
               % skupen_trend24h = sum([portfelj.trend24h * portfelj.vrednost for portfelj in portfelji]) / skupna_vrednost
