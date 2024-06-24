@@ -22,7 +22,7 @@
           </select>
         </div>
         <label for="kolicina">Količina (za nakup vnesi pozitivno, za prodajo pa negativno število)</label>
-        <input type="number" class="form-control" id="kolicina" name="kolicina" placeholder="Količina" step="0.000001">
+        <input type="number" class="form-control" id="kolicina" name="kolicina" placeholder="Količina" step="0.000001" required>
       </div>
       % if napaka:
       <div class="alert alert-danger py-1 m-0 fs-6">{{napaka}}</div>
