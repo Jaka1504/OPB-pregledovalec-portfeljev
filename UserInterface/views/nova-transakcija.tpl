@@ -7,7 +7,7 @@
       <div class="form-group">
         <label for="portfelj">Portfelj:</label>
         <div class="d-grid">
-          <select class="selectpicker" id="portfelj" name="portfelj" data-live-search="true" data-width="fit" data-title="Izberi portfelj...">
+          <select class="selectpicker" id="portfelj" name="portfelj" data-live-search="true" data-width="fit" data-title="Izberi portfelj..." required>
             % for portfelj in portfelji:
             <option data-tokens="{{portfelj.id}} {{portfelj.ime}}" value="{{portfelj.id}}">{{portfelj.ime}} [Stanje: {{portfelj.gotovina}} $]</option>
             % end
@@ -15,7 +15,7 @@
         </div>
         <label for="kriptovaluta">Kriptovaluta:</label>
         <div class="d-grid">
-          <select class="selectpicker" id="kriptovaluta" name="kriptovaluta" data-live-search="true" data-width="fit" data-size="15" data-noneSelectedText="Izberi kriptovaluto..." data-title="Izberi kriptovaluto...">
+          <select class="selectpicker" id="kriptovaluta" name="kriptovaluta" data-live-search="true" data-width="fit" data-size="15" data-noneSelectedText="Izberi kriptovaluto..." data-title="Izberi kriptovaluto..." required>
             % for kriptovaluta in vse_kriptovalute:
             <option data-tokens="{{kriptovaluta.kratica}} {{kriptovaluta.ime}}" value="{{kriptovaluta.id}}">{{kriptovaluta.ime}}, {{kriptovaluta.kratica}} [{{kriptovaluta.zadnja_cena}} $]</option>
             % end
