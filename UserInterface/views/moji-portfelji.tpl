@@ -3,6 +3,7 @@
 
 <h1>Moji portfelji</h1>
 <div class="card bg-secondary">
+  % if portfelji:
   <div class="card-header">
     <p class="mb-0">
       Kliknite na gumb na desni za podrobnejši vpogled ali urejanje posameznega portfelja.
@@ -76,7 +77,7 @@
               {{f"{skupna_vrednost - skupen_vlozek:.2f}"}} $
             </td>
             <td class="fixed-foot text-end">
-              % skupen_trend24h = sum([portfelj.trend24h * portfelj.vrednost for portfelj in portfelji]) / skupna_vrednost
+              % skupen_trend24h = sum([portfelj.trend24h * portfelj.vrednost for portfelj in portfelji]) / skupna_vrednost if skupna_vrednost else 0
               % if skupen_trend24h >= 0: 
               <span class="besedilo-zeleno">{{f"{skupen_trend24h:.2f}"}} % ▲</span>
               % else:
@@ -84,7 +85,7 @@
               % end
             </td>
             <td class="fixed-foot text-end">
-              % skupen_trend7d = sum([portfelj.trend7d * portfelj.vrednost for portfelj in portfelji]) / skupna_vrednost
+              % skupen_trend7d = sum([portfelj.trend7d * portfelj.vrednost for portfelj in portfelji]) / skupna_vrednost if skupna_vrednost else 0
               % if skupen_trend7d >= 0: 
               <span class="besedilo-zeleno">{{f"{skupen_trend7d:.2f}"}} % ▲</span>
               % else:
@@ -106,4 +107,16 @@
       </div>
     </div>
   </div>
+  % else:
+  <div class="card-body">
+    <p class="mb-1">
+      Trenutno nimate na tem računu še nobenega portfelja. Ustvarite svoj prvi portfelj s klikom na spodnji gumb.
+    </p>
+    <div class="row mb-0" width="100%">
+      <div class="col d-grid">
+        <a class="btn btn-dark btn-block" href="/nov-portfelj/">Dodaj nov portfelj</a>
+      </div>
+    </div>
+  </div>
+  % end
 </div>
