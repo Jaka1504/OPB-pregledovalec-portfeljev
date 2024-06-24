@@ -99,7 +99,7 @@
     </div>
     <div class="row mb-3" width="100%">
       <div class="col d-grid">
-        <a class="btn btn-dark btn-block" href="/">Posodobi stanje</a>
+        <a class="btn btn-dark btn-block" href="/dodaj-denar/">Dodaj denar na portfelj</a>
       </div>
       <div class="col d-grid">
         <a class="btn btn-dark btn-block" href="/nov-portfelj/">Dodaj nov portfelj</a>

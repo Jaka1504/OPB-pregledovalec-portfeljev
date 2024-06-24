@@ -198,10 +198,29 @@ def post_nova_transakcija():
         )
 
 
+@bottle.get("/dodaj-denar/")
+def get_dodaj_denar():
+    uporabnisko_ime=poisci_uporabnisko_ime()
+    portfelji = p_service.najdi_vse_portfelje(uporabnisko_ime)
+    return bottle.template(
+        "dodaj-denar",
+        napaka=None,
+        portfelji=portfelji,
+        uporabnisko_ime=uporabnisko_ime,
+    )
+
+
+@bottle.post("/dodaj-denar/")
+def post_dodaj_denar():
+    portfelj = int(bottle.request.forms.getunicode("portfelj"))
+    kolicina = float(bottle.request.forms.getunicode("kolicina"))
+    p_service.dodaj_vlozek(portfelj, kolicina)
+    return bottle.redirect(f"/portfelj/{portfelj}/")
+
+
 @bottle.get("/kriptovaluta/<id_portfelja>/<id_kriptovalute>/")
 def get_kriptovaluta(id_portfelja, id_kriptovalute):
     kriptovaluta = najdi_kriptovaluto(id_portfelja, id_kriptovalute)
-    # kriptovaluta = logic.najdi_kriptovaluto(id_portfelja, id_kriptovalute)
     graf = k_service.ustvari_graf_zgodovine_cen(id=id_kriptovalute)
     return bottle.template(
         "kriptovaluta",
@@ -240,7 +259,7 @@ def najdi_kriptovaluto(id_portfelja, id_kriptovalute):
     kriptovaluta = {
         "ime": kripto.ime,
         "kratica": kripto.kratica,
-        "ime_portfelja": portfelj.ime,
+        "portfelj": portfelj,
         "vrednost_enote": kripto.zadnja_cena,
         "trend24h": kripto.trend24h,
         "trend7d": kripto.trend7d,

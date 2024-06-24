@@ -5,7 +5,7 @@
 % skupna_vrednost = skupna_kolicina * kriptovaluta["vrednost_enote"]
 % skupen_donos = skupna_vrednost - skupna_cena
 
-<h1>Kriptovaluta {{kriptovaluta["ime"]}} v portfelju {{kriptovaluta["ime_portfelja"]}}</h1>
+<h1>Kriptovaluta {{kriptovaluta["ime"]}} v portfelju {{kriptovaluta["portfelj"].ime}}</h1>
 <div class="card bg-secondary mb-6">
   <div class="card-header">
     <h3>Podrobnosti</h3>
@@ -126,7 +126,7 @@
     </div>
     <div class="row mb-3" width="100%">
       <div class="col d-grid">
-        <a class="btn btn-dark btn-block" href="/">Posodobi stanje</a>
+        <a class="btn btn-dark btn-block" href="/portfelj/{{kriptovaluta['portfelj'].id}}/">Nazaj na portfelj</a>
       </div>
       <div class="col d-grid">
         <a class="btn btn-dark btn-block" href="/nova-transakcija/">Dodaj transakcijo</a>
