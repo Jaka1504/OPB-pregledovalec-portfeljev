@@ -16,13 +16,13 @@
         <div class="col">
           <table class="table text-light">
             <tbody>
-              <tr><td class="py-0">Ime</td><td class="py-0">{{kriptovaluta["ime"]}}</td></tr>
-              <tr><td class="py-0">Kratica</td><td class="py-0">{{kriptovaluta["kratica"]}}</td></tr>
-              <tr><td class="py-0">Količina</td><td class="py-0">{{f"{skupna_kolicina:.6f}"}}</td></tr>
-              <tr><td class="py-0">Vrednost ene enote</td><td class="py-0">{{f"{kriptovaluta["vrednost_enote"]:.2f}"}} $</td></tr>
+              <tr><td class="py-0">Ime</td><td class="py-0 text-end">{{kriptovaluta["ime"]}}</td></tr>
+              <tr><td class="py-0">Kratica</td><td class="py-0 text-end">{{kriptovaluta["kratica"]}}</td></tr>
+              <tr><td class="py-0">Količina</td><td class="py-0 text-end">{{f"{skupna_kolicina:.6f}"}}</td></tr>
+              <tr><td class="py-0">Vrednost ene enote</td><td class="py-0 text-end">{{f"{kriptovaluta["vrednost_enote"]:.4f}"}} $</td></tr>
               <tr>
                 <td class="py-0">Trend 24h</td>
-                <td class="py-0">
+                <td class="py-0 text-end">
                   % if kriptovaluta["trend24h"] >= 0: 
                   <span class="besedilo-zeleno">{{f"{kriptovaluta["trend24h"]:.2f}"}} % ▲</span>
                   % else:
@@ -32,7 +32,7 @@
               </tr>
               <tr>
                 <td class="py-0">Trend 7d</td>
-                <td class="py-0">
+                <td class="py-0 text-end">
                   % if kriptovaluta["trend7d"] >= 0: 
                   <span class="besedilo-zeleno">{{f"{kriptovaluta["trend7d"]:.2f}"}} % ▲</span>
                   % else:
@@ -41,7 +41,7 @@
                 </td>
               </tr>
               <!-- VLOŽEK -->
-              <tr><td class="py-0">Skupna vrednost</td><td class="py-0">{{f"{skupna_vrednost:.2f}"}} $</td></tr>
+              <tr><td class="py-0">Skupna vrednost</td><td class="py-0 text-end">{{f"{skupna_vrednost:.2f}"}} $</td></tr>
               <!-- DONOS -->
             </tbody>
           </table>
