@@ -53,23 +53,23 @@
               {{kriptovaluta["kratica"]}}
             </td>
             <td class="text-end">
-              {{f"{kriptovaluta["kolicina"]:.6f}"}}
+              {{f"{kriptovaluta['kolicina']:.6f}"}}
             </td>
             <td class="text-end">
-              {{f"{kriptovaluta["vrednost"]:.2f}"}} $
+              {{f"{kriptovaluta['vrednost']:.2f}"}} $
             </td>
             <td class="text-end">
-              % if kriptovaluta["trend24h"] >= 0: 
-              <span class="besedilo-zeleno">{{f"{kriptovaluta["trend24h"]:.2f}"}} % ▲</span>
+              % if kriptovaluta['trend24h'] >= 0: 
+              <span class="besedilo-zeleno">{{f"{kriptovaluta['trend24h']:.2f}"}} % ▲</span>
               % else:
-              <span class="besedilo-rdece">{{f"{kriptovaluta["trend24h"]:.2f}"}} % ▼</span>
+              <span class="besedilo-rdece">{{f"{kriptovaluta['trend24h']:.2f}"}} % ▼</span>
               % end
             </td>
             <td class="text-end">
               % if kriptovaluta["trend7d"] >= 0: 
-              <span class="besedilo-zeleno">{{f"{kriptovaluta["trend7d"]:.2f}"}} % ▲</span>
+              <span class="besedilo-zeleno">{{f"{kriptovaluta['trend7d']:.2f}"}} % ▲</span>
               % else:
-              <span class="besedilo-rdece">{{f"{kriptovaluta["trend7d"]:.2f}"}} % ▼</span>
+              <span class="besedilo-rdece">{{f"{kriptovaluta['trend7d']:.2f}"}} % ▼</span>
               % end
             </td>
             <td class="text-end text-light">

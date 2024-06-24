@@ -19,14 +19,14 @@
               <tr><td class="py-0">Ime</td><td class="py-0 text-end">{{kriptovaluta["ime"]}}</td></tr>
               <tr><td class="py-0">Kratica</td><td class="py-0 text-end">{{kriptovaluta["kratica"]}}</td></tr>
               <tr><td class="py-0">Količina</td><td class="py-0 text-end">{{f"{skupna_kolicina:.6f}"}}</td></tr>
-              <tr><td class="py-0">Vrednost ene enote</td><td class="py-0 text-end">{{f"{kriptovaluta["vrednost_enote"]:.4f}"}} $</td></tr>
+              <tr><td class="py-0">Vrednost ene enote</td><td class="py-0 text-end">{{f"{kriptovaluta['vrednost_enote']:.4f}"}} $</td></tr>
               <tr>
                 <td class="py-0">Trend 24h</td>
                 <td class="py-0 text-end">
                   % if kriptovaluta["trend24h"] >= 0: 
-                  <span class="besedilo-zeleno">{{f"{kriptovaluta["trend24h"]:.2f}"}} % ▲</span>
+                  <span class="besedilo-zeleno">{{f"{kriptovaluta['trend24h']:.2f}"}} % ▲</span>
                   % else:
-                  <span class="besedilo-rdece">{{f"{kriptovaluta["trend24h"]:.2f}"}} % ▼</span>
+                  <span class="besedilo-rdece">{{f"{kriptovaluta['trend24h']:.2f}"}} % ▼</span>
                   % end
                 </td>
               </tr>
@@ -34,9 +34,9 @@
                 <td class="py-0">Trend 7d</td>
                 <td class="py-0 text-end">
                   % if kriptovaluta["trend7d"] >= 0: 
-                  <span class="besedilo-zeleno">{{f"{kriptovaluta["trend7d"]:.2f}"}} % ▲</span>
+                  <span class="besedilo-zeleno">{{f"{kriptovaluta['trend7d']:.2f}"}} % ▲</span>
                   % else:
-                  <span class="besedilo-rdece">{{f"{kriptovaluta["trend7d"]:.2f}"}} % ▼</span>
+                  <span class="besedilo-rdece">{{f"{kriptovaluta['trend7d']:.2f}"}} % ▼</span>
                   % end
                 </td>
               </tr>
@@ -82,7 +82,7 @@
               {{transakcija.cas}}
             </td>
             <td class="py-0 text-end">
-              {{f"{transakcija.cena:.2f}"}} $
+              {{f"{transakcija.cena:.6f}"}} $
             </td>
             <td class="py-0 text-end">
               {{f"{transakcija.kolicina:.6f}"}}
