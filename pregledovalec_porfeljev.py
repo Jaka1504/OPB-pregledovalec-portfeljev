@@ -210,18 +210,22 @@ def get_kriptovaluta(id_portfelja, id_kriptovalute):
 def najdi_portfelj(id_portfelja):
     '''TODO'''
     portfelj = p_service.najdi_portfelj(id_portfelja=id_portfelja)
+    kriptovalute = dict()
     for id_kripto, kolicina in portfelj.kriptovalute.items():
-        kriptovaluta = k_service.dobi_kriptovaluto(id_kripto)
-        portfelj.kriptovalute[id_kripto] = {
-            "id" : id_kripto,
-            "ime" : kriptovaluta.ime,
-            "kratica" : kriptovaluta.kratica,
-            "kolicina" : kolicina,
-            "vrednost" : kolicina * kriptovaluta.zadnja_cena,
-            "trend24h" : kriptovaluta.trend24h,                     # WIP
-            "trend7d" : kriptovaluta.trend7d
-        }
+        if kolicina > 0:
+            kriptovaluta = k_service.dobi_kriptovaluto(id_kripto)
+            kriptovalute[id_kripto] = {
+                "id" : id_kripto,
+                "ime" : kriptovaluta.ime,
+                "kratica" : kriptovaluta.kratica,
+                "kolicina" : kolicina,
+                "vrednost" : kolicina * kriptovaluta.zadnja_cena,
+                "trend24h" : kriptovaluta.trend24h,
+                "trend7d" : kriptovaluta.trend7d
+            }
+    portfelj.kriptovalute = kriptovalute
     return portfelj
+
 
 def najdi_kriptovaluto(id_portfelja, id_kriptovalute):
     '''TODO'''
@@ -237,44 +241,6 @@ def najdi_kriptovaluto(id_portfelja, id_kriptovalute):
         "trend7d": kripto.trend7d,
         "transakcije": transakcije
     }
-
-    # transakcija1 = {
-    #             "id" : 1,
-    #             "cena_enote" : 20105.20,
-    #             "kolicina" : 0.002,
-    #             "datum" : "13. 5. 2024",
-    #         }
-    # transakcija2 = {
-    #             "id" : 2,
-    #             "cena_enote" : 19595.20,
-    #             "kolicina" : 0.00420,
-    #             "datum" : "11. 9. 2001",
-    #         }
-    # kriptovaluta = {
-    #     "ime": "Bitcoin",
-    #     "kratica": "BTC",
-    #     "ime_portfelja": "kripto:)",
-    #     "vrednost_enote": 18697.65,
-    #     "trend": 0.64,
-    #     "transakcije": [
-    #         transakcija1,
-    #         transakcija2,
-    #         transakcija1,
-    #         transakcija2,
-    #         transakcija1,
-    #         transakcija2,
-    #         transakcija1,
-    #         transakcija2,
-    #         transakcija1,
-    #         transakcija2,
-    #         transakcija1,
-    #         transakcija2,
-    #         transakcija1,
-    #         transakcija2,
-    #         transakcija1,
-    #         transakcija2
-    #     ]
-    # }
     return kriptovaluta
 
 
