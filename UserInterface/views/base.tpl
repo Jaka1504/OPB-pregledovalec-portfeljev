@@ -55,7 +55,7 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link text-light" href="/kriptovalute/">
+                  <a class="nav-link text-light" href="/kriptovalute/90/">
                     Kriptovalute
                   </a>
                 </li>

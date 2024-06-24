@@ -229,6 +229,26 @@ def get_kriptovaluta(id_portfelja, id_kriptovalute):
         graf = graf
         )
 
+@bottle.get("/kriptovalute/<id_kriptovalute>/")
+def get_kriptovalute(id_kriptovalute):
+    uporabnisko_ime = poisci_uporabnisko_ime()
+    vse_kriptovalute = k_service.dobi_kriptovalute()
+    kriptovaluta = dobi_kriptovaluto(id_kriptovalute)
+    graf = k_service.ustvari_graf_zgodovine_cen(id=id_kriptovalute)
+    return bottle.template(
+        "kriptovalute",
+        graf=graf,
+        vse_kriptovalute=vse_kriptovalute,
+        kriptovaluta=kriptovaluta,
+        uporabnisko_ime=uporabnisko_ime,
+    )
+
+@bottle.post("/najdi-kripto/")
+def post_nova_transakcija():
+    id_kriptovalute = int(bottle.request.forms.getunicode("kriptovaluta"))
+    return bottle.redirect(f"/kriptovalute/{id_kriptovalute}/")
+
+
 #####################################################################################################
 
 def najdi_portfelj(id_portfelja):
@@ -264,6 +284,17 @@ def najdi_kriptovaluto(id_portfelja, id_kriptovalute):
         "trend24h": kripto.trend24h,
         "trend7d": kripto.trend7d,
         "transakcije": transakcije
+    }
+    return kriptovaluta
+
+def dobi_kriptovaluto(id_kriptovalute):
+    kripto = k_service.dobi_kriptovaluto(id_kriptovalute)
+    kriptovaluta = {
+        "ime": kripto.ime,
+        "kratica": kripto.kratica,
+        "vrednost_enote": kripto.zadnja_cena,
+        "trend24h": kripto.trend24h,
+        "trend7d": kripto.trend7d,
     }
     return kriptovaluta
 
