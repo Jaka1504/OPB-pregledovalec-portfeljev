@@ -167,7 +167,7 @@ class Repo:
         Transakcije so objekti TransakcijaDto() iz Data.modeli.
         """
         cmd = f"""
-            SELECT t.id, t.kolicina, t.cas, t.portfelj, t.kriptovaluta, c.cena 
+            SELECT DISTINCT t.id, t.kolicina, t.cas, t.portfelj, t.kriptovaluta, c.cena 
             from transakcija t
             JOIN cenakriptovalute c ON t.cas = c.cas AND t.kriptovaluta = c.kriptovaluta
             WHERE portfelj = {id} 
@@ -306,6 +306,24 @@ class Repo:
             casi.append(datetime.strftime(cas, '%Y-%m-%d %H:%M:%S'))
             cene.append(cena)
         return (casi, cene)
+    
+    def dobi_zgodovino_vrednosti_portfelja(self, id):
+        """
+        Vrne par seznamov časov in vrednosti portfelja z danim id-jem.
+        """
+        cmd = """
+            SELECT cas, vrednost
+            FROM vrednostportfelja
+            WHERE portfelj = %s
+            """
+        data = (str(id), )
+        self.cur.execute(cmd, data)
+        casi = []
+        vrednosti = []
+        for cas, vrednost in self.cur.fetchall():
+            casi.append(datetime.strftime(cas, '%Y-%m-%d %H:%M:%S'))
+            vrednosti.append(vrednost)
+        return (casi, vrednosti)
     
     def dodaj_vlozek_portfelju(self, id, vlozek):
         """

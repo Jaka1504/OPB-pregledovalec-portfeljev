@@ -1,6 +1,8 @@
 from Data.database import Repo
 from Data.modeli import *
 from Data.api import Api
+from pandas import DataFrame
+import plotly.express as px
 
 
 class PortfeljService():
@@ -104,3 +106,27 @@ class PortfeljService():
         self.repo.dodaj_vlozek_portfelju(id_portfelja, vlozek)
         return self.repo.dobi_portfelj(id_portfelja)
 
+
+    def ustvari_graf_zgodovine_vrednosti(self, id):
+        """Vrne objekt, ki ga vstavimo v HTML datoteko, da prikaže graf zgodovine vrednosti portfelja z danim id-jem"""
+        casi, vrednosti = self.repo.dobi_zgodovino_vrednosti_portfelja(id)
+        df = DataFrame({
+            "Čas": casi,
+            "Vrednost": vrednosti
+        })
+        fig = px.line(df, x="Čas", y="Vrednost")
+        fig.update_layout({
+            "plot_bgcolor" : "rgba(0, 0, 0, 0)",
+            "paper_bgcolor" : "rgba(0, 0, 0, 0)",
+            "font_color" : "rgba(255, 255, 255, 1)",
+            "height" : 300,
+            "margin" : {
+                "l" : 0,
+                "r" : 0,
+                "b" : 10,
+                "t" : 10,
+                "pad" : 0
+            }
+        })
+        fig.update_traces(line_color="#00ff00", line_width=2)
+        return fig.to_html(full_html=False)

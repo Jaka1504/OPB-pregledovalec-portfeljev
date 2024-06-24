@@ -50,7 +50,12 @@ def get_moji_portfelji():
 @bottle.get("/portfelj/<id_portfelja>/")
 def get_portfelj(id_portfelja):
     portfelj = najdi_portfelj(id_portfelja)
-    return bottle.template("portfelj", portfelj=portfelj, uporabnisko_ime=poisci_uporabnisko_ime())
+    graf = p_service.ustvari_graf_zgodovine_vrednosti(id_portfelja)
+    return bottle.template(
+        "portfelj",
+        portfelj=portfelj,
+        graf=graf,
+        uporabnisko_ime=poisci_uporabnisko_ime())
 
 
 @bottle.get("/prijava/")

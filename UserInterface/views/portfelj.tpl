@@ -1,12 +1,31 @@
 % rebase("base.tpl", title="Portfelj " + portfelj.ime)
 
 
+% skupna_vrednost = sum([kriptovaluta["vrednost"] for kriptovaluta in portfelj.kriptovalute.values()])
+
+
 <h1>Portfelj {{portfelj.ime}}</h1>
 <div class="card bg-secondary">
   <div class="card-header">
-    <p class="mb-0">
-      Kliknite na gumb na desni za podrobnejši vpogled ali urejanje posamezne kriptovalute.
-    </p>
+
+
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <table class="table text-light">
+            <tbody>
+              <tr><td class="py-0">Začetni vložek</td><td class="py-0 text-end">{{f"{portfelj.vlozek:.2f}"}} $</td></tr>
+              <tr><td class="py-0">Denar na portfelju</td><td class="py-0 text-end">{{f"{portfelj.gotovina:.2f}"}} $</td></tr>
+              <tr><td class="py-0">Skupna vrednost</td><td class="py-0 text-end">{{f"{skupna_vrednost + portfelj.gotovina:.2f}"}} $</td></tr>
+              <tr><td class="py-0">Donos</td><td class="py-0 text-end">{{f"{skupna_vrednost + portfelj.gotovina - portfelj.vlozek:.2f}"}} $</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col">
+          {{!graf}}
+        </div>
+      </div>
+    </div>
   </div>
   <div class="card-body py-0">
     <div class="tabela-scroll d-grid">
@@ -69,7 +88,6 @@
             <td class="fixed-foot"></td> <!-- kratica -->
             <td class="fixed-foot"></td> <!-- kolicina -->
             <td class="fixed-foot text-end">
-              % skupna_vrednost = sum([kriptovaluta["vrednost"] for kriptovaluta in portfelj.kriptovalute.values()])
               {{f"{skupna_vrednost:.2f}"}} $
             </td>
             <td class="fixed-foot text-end">
