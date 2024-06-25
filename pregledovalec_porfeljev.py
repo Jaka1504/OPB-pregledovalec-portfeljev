@@ -49,13 +49,17 @@ def get_moji_portfelji():
 
 @bottle.get("/portfelj/<id_portfelja>/")
 def get_portfelj(id_portfelja):
+    uporabnisko_ime=poisci_uporabnisko_ime()
     portfelj = najdi_portfelj(id_portfelja)
-    graf = p_service.ustvari_graf_zgodovine_vrednosti(id_portfelja)
-    return bottle.template(
-        "portfelj",
-        portfelj=portfelj,
-        graf=graf,
-        uporabnisko_ime=poisci_uporabnisko_ime())
+    if portfelj.lastnik != uporabnisko_ime:
+        return bottle.redirect("/napacen-uporabnik/")
+    else:
+        graf = p_service.ustvari_graf_zgodovine_vrednosti(id_portfelja)
+        return bottle.template(
+            "portfelj",
+            portfelj=portfelj,
+            graf=graf,
+            uporabnisko_ime=uporabnisko_ime)
 
 
 @bottle.get("/prijava/")
@@ -72,7 +76,6 @@ def post_prijava():
     uporabnisko_ime = bottle.request.forms.getunicode("uporabnisko_ime")
     geslo = auth.zasifriraj_geslo(bottle.request.forms.getunicode("geslo"))
     napaka = None
-    # TODO daj iz auth
     if uporabnisko_ime in auth.seznam_uporabniskih_imen():
         if auth.preveri_geslo(
             uporabnisko_ime=uporabnisko_ime, zasifrirano_geslo=geslo
@@ -130,10 +133,10 @@ def get_profil():
     return bottle.template("profil", uporabnisko_ime=uporabnisko_ime, napaka=None)
 
 
-@bottle.post("/odjava/")
-def post_odjava():
+@bottle.get("/odjava/")
+def get_odjava():
     odjavi_uporabnika()
-    return bottle.redirect("/")
+    return bottle.redirect("/prijava/")
 
 
 @bottle.get("/nov-portfelj/")
@@ -220,14 +223,20 @@ def post_dodaj_denar():
 
 @bottle.get("/kriptovaluta/<id_portfelja>/<id_kriptovalute>/")
 def get_kriptovaluta(id_portfelja, id_kriptovalute):
-    kriptovaluta = najdi_kriptovaluto(id_portfelja, id_kriptovalute)
-    graf = k_service.ustvari_graf_zgodovine_cen(id=id_kriptovalute)
-    return bottle.template(
-        "kriptovaluta",
-        kriptovaluta=kriptovaluta,
-        uporabnisko_ime=poisci_uporabnisko_ime(),
-        graf = graf
-        )
+    uporabnisko_ime=poisci_uporabnisko_ime()
+    portfelj = najdi_portfelj(id_portfelja)
+    if portfelj.lastnik != uporabnisko_ime:
+        return bottle.redirect("/napacen-uporabnik/")
+    else:
+        kriptovaluta = najdi_kriptovaluto(id_portfelja, id_kriptovalute)
+        graf = k_service.ustvari_graf_zgodovine_cen(id=id_kriptovalute)
+        return bottle.template(
+            "kriptovaluta",
+            kriptovaluta=kriptovaluta,
+            uporabnisko_ime=uporabnisko_ime,
+            graf = graf
+            )
+
 
 @bottle.get("/kriptovalute/<id_kriptovalute>/")
 def get_kriptovalute(id_kriptovalute):
@@ -247,6 +256,15 @@ def get_kriptovalute(id_kriptovalute):
 def post_nova_transakcija():
     id_kriptovalute = int(bottle.request.forms.getunicode("kriptovaluta"))
     return bottle.redirect(f"/kriptovalute/{id_kriptovalute}/")
+
+
+@bottle.get("/napacen-uporabnik/")
+def get_napacen_uporabnik():
+    uporabnisko_ime = poisci_uporabnisko_ime()
+    return bottle.template(
+        "napacen-uporabnik",
+        uporabnisko_ime=uporabnisko_ime
+    )
 
 
 #####################################################################################################

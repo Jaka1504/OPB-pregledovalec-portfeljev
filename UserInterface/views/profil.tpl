@@ -17,12 +17,10 @@
     Upravljanje računa
   </div>
   <div class="card-body pt-1">
-    <form action="/odjava/" method="post">
-      <p class="fs-4 mb-0">Odjava</p>
-      <div class="d-grid">
-        <button class="btn btn-dark mt-1" type="submit">Odjava</button>
-      </div>
-    </form>
+    <p class="fs-4 mb-0">Odjava</p>
+    <div class="d-grid">
+      <a class="btn btn-dark btn-block" href="/odjava/">Odjava</a>
+    </div>
   </div>
   <div class="card-footer pt-1">
     <form action="/profil/" method="post">
