@@ -67,7 +67,7 @@
       <table class="table text-light">
         <thead class="fixed-head bg-secondary">
           <tr>
-            <th scope="col" class="fixed-head">Čas nakupa</th>
+            <th scope="col" class="fixed-head">Čas transakcije</th>
             <th scope="col" class="fixed-head text-end">Cena enote</th>
             <th scope="col" class="fixed-head text-end">Količina</th>
             <th scope="col" class="fixed-head text-end">Cena nakupa / prodaje</th>

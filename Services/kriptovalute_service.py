@@ -47,10 +47,10 @@ class KriptovaluteService:
         """Vrne objekt, ki ga vstavimo v HTML datoteko, da prikaže graf zgodovine cene kriptovalute z danim id-jem"""
         casi, cene = self.repo.dobi_zgodovino_cen_kriptovalute(id)
         df = DataFrame({
-            "cas": casi,
-            "cena": cene
+            "Čas": casi,
+            "Cena": cene
         })
-        fig = px.line(df, x="cas", y="cena")
+        fig = px.line(df, x="Čas", y="Cena")
         fig.update_layout({
             "plot_bgcolor" : "rgba(0, 0, 0, 0)",
             "paper_bgcolor" : "rgba(0, 0, 0, 0)",
