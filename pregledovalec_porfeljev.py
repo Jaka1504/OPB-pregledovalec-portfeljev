@@ -12,7 +12,6 @@ views_path = os.path.join(base_path, 'UserInterface', 'views')
 bottle.TEMPLATE_PATH.insert(0, views_path)
 
 
-auth = AuthService()
 p_service = PortfeljService()
 k_service = KriptovaluteService()
 t_service = TransakcijeService()
@@ -73,6 +72,7 @@ def get_prijava():
 
 @bottle.post("/prijava/")
 def post_prijava():
+    auth = AuthService()
     uporabnisko_ime = bottle.request.forms.getunicode("uporabnisko_ime")
     geslo = auth.zasifriraj_geslo(bottle.request.forms.getunicode("geslo"))
     napaka = None
@@ -109,6 +109,7 @@ def get_registracija():
 
 @bottle.post("/registracija/")
 def post_registracija():
+    auth = AuthService()
     uporabnisko_ime = bottle.request.forms.getunicode("uporabnisko_ime")
     ime = bottle.request.forms.getunicode("ime")
     priimek = bottle.request.forms.getunicode("priimek")
