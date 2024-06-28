@@ -33,6 +33,7 @@ def img(ime_datoteke):
     return bottle.static_file(ime_datoteke, root="UserInterface/img")
 
 
+@bottle.get("")
 @bottle.get("/")
 def get_index():
     auth = AuthService()
@@ -344,4 +345,4 @@ def odjavi_uporabnika():
 # if __name__ == "__main__":
 #     bottle.run(host='localhost', port=SERVER_PORT, reloader=RELOADER, debug=True)
 
-bottle.run(host="localhost", port=SERVER_PORT)
+bottle.run(host="localhost", port=SERVER_PORT, reloader=RELOADER)
