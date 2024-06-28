@@ -8,3 +8,8 @@ Najina aplikacija je namenjena upravljanju različnih portfeljev in spremljanju 
 
 ## ER diagram
 ![ER diagram](https://github.com/Jaka1504/OPB-pregledovalec-portfeljev/blob/main/ER_diagram/ER_diagram3.png?raw=true)
+
+
+## Binder
+
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/Jaka1504/OPB-pregledovalec-portfeljev/main?labpath=proxy%2F8080)
