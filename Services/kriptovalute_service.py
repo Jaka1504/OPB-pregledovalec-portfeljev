@@ -50,6 +50,7 @@ class KriptovaluteService:
             "Čas": casi,
             "Cena": cene
         })
+        df.sort_values(by="Čas", ignore_index=True, inplace=True)
         fig = px.line(df, x="Čas", y="Cena")
         fig.update_layout({
             "plot_bgcolor" : "rgba(0, 0, 0, 0)",
