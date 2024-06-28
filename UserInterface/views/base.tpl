@@ -61,13 +61,28 @@
                 </li>
               </ul>
               
+              % if uporabnisko_ime:
+              <div class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  {{uporabnisko_ime}}
+                </a>
+                <div class="dropdown-menu bg-secondary py-1" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item bg-secondary text-light py-1" href="/odjava/">Odjava</a>
+                </div>
+              </div>
+              % else:
               <div class="nav-item">
+                <a class="nav-link text-light" href="/prijava/">Prijava</a>
+              </div>
+              % end
+
+              <!-- <div class="nav-item">
                 % if uporabnisko_ime:
                 <a class="nav-link text-light" href="/profil/">{{uporabnisko_ime}}</a>
                 % else:
                 <a class="nav-link text-light" href="/prijava/">Prijava</a>
                 % end
-              </div>
+              </div> -->
              
             </div>
           </div>
