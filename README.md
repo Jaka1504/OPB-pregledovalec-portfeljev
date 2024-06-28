@@ -12,4 +12,4 @@ Najina aplikacija je namenjena upravljanju različnih portfeljev in spremljanju 
 
 ## Binder
 
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/Jaka1504/OPB-pregledovalec-portfeljev/main?labpath=proxy%2F8080)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/Jaka1504/OPB-pregledovalec-portfeljev/main?urlpath=proxy%2F8080)
