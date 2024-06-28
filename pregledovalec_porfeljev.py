@@ -282,7 +282,6 @@ def get_napacen_uporabnik():
 #####################################################################################################
 
 def najdi_portfelj(id_portfelja):
-    '''TODO'''
     portfelj = p_service.najdi_portfelj(id_portfelja=id_portfelja)
     kriptovalute = dict()
     for id_kripto, kolicina in portfelj.kriptovalute.items():
@@ -302,7 +301,7 @@ def najdi_portfelj(id_portfelja):
 
 
 def najdi_kriptovaluto(id_portfelja, id_kriptovalute):
-    '''TODO'''
+    k_service.posodobi_ceno(id_kriptovalute)
     portfelj = p_service.najdi_portfelj(id_portfelja)
     kripto = k_service.dobi_kriptovaluto(id_kriptovalute)
     transakcije = t_service.dobi_transakcije_v_portfelju(id_portfelja, id_kriptovalute)
@@ -318,6 +317,7 @@ def najdi_kriptovaluto(id_portfelja, id_kriptovalute):
     return kriptovaluta
 
 def dobi_kriptovaluto(id_kriptovalute):
+    k_service.posodobi_ceno(id_kriptovalute)
     kripto = k_service.dobi_kriptovaluto(id_kriptovalute)
     kriptovaluta = {
         "ime": kripto.ime,
