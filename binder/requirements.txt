@@ -3,7 +3,6 @@ datetime
 psycopg2-binary
 dataclasses
 dataclasses_json
-hashlib
 plotly
 pandas
 schedule
