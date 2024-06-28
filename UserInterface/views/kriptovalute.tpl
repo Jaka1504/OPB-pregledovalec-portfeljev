@@ -1,8 +1,8 @@
 % rebase("base.tpl", title="Kriptovaluta " + kriptovaluta["ime"])
 
 <h2>Išči druge kriptovalute</h2>
-<div class="card bg-secondary">
-  <div class="card-body">
+<div class="card bg-secondary mb-3">
+  <div class="card-body pt-2 pb-0">
     <form action="/najdi-kripto/" method="post">
       <div class="form-group">
         <label for="kriptovaluta">Kriptovaluta:</label>
@@ -22,11 +22,11 @@
 </div>
 
 <h2>Kriptovaluta {{kriptovaluta["ime"]}}</h2>
-<div class="card bg-secondary mb-6">
-  <div class="card-header">
-    <h3>Podrobnosti</h3>
+<div class="card bg-secondary">
+  <div class="card-header pb-0">
+    <h3 class="mb-0">Podrobnosti</h3>
   </div>
-  <div class="card-body py-0">
+  <div class="card-body">
     <div class="container">
       <div class="row">
         <div class="col">
@@ -63,14 +63,10 @@
         </div>
       </div>
     </div>
-    <div class="row mb-3" width=100%"> 
+    <div class="row mt-2"> 
       <div class="col d-grid">
         <a class="btn btn-dark btn-block" href="/nova-transakcija/">Dodaj transakcijo</a>
       </div>
     </div>
   </div>
-</div>
-
-<div class="container-fluid text-dark">   <!-- To je precej cigansko, probej popravit -->
-  .
 </div>
