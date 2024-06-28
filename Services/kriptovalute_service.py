@@ -19,16 +19,22 @@ class KriptovaluteService:
             self.repo.dodaj_kriptovaluto(kripto)
 
 
-    def posodobi_ceno(self, kratica):
+    def posodobi_ceno(self, id):
         """
-        Posodobi ceno kriptovalute s kratico kratica iz tabele Kriptovaluta na zadnjo znano ceno, če taka kriptovaluta obstaja.
+        Posodobi ceno kriptovalute z id-jem id iz tabele Kriptovaluta na zadnjo znano ceno, če taka kriptovaluta obstaja.
         """
         try:
-            kriptovaluta = self.repo.dobi_kriptovaluto_po_kratici(kratica)
-            kripto = self.api.dobi_cene_kriptovalut([kriptovaluta.id])[0][0]
-            self.repo.posodobi_ceno_kriptovalute(kriptovaluta.id, kripto.zadnja_cena, kripto.trend24h, kripto.trend7d)
+            kripto, cas = self.api.dobi_cene_kriptovalut([id])
+            kripto = kripto[0]
+            self.repo.posodobi_ceno_kriptovalute(id, kripto.zadnja_cena, kripto.trend24h, kripto.trend7d)
+            cenaKriptovalute = CenaKriptovalute(
+                kriptovaluta = kripto.id,
+                cas = cas,
+                cena = kripto.zadnja_cena
+            )
+            self.repo.dodaj_ceno_kriptovalute(cenaKriptovalute)
         except:
-            raise Exception("Kratica ne obstaja.")
+            raise Exception("Id ne obstaja.")
 
     def dobi_kriptovaluto(self, id):
         """Vrne objekt Kriptovaluta() iz Data.modeli, v katerem so shranjeni podatki o kriptovaluti z id-jem id."""
