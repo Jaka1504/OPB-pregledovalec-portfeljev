@@ -11,6 +11,9 @@ base_path = os.path.abspath(os.path.dirname(__file__))
 views_path = os.path.join(base_path, 'UserInterface', 'views')
 bottle.TEMPLATE_PATH.insert(0, views_path)
 
+SERVER_PORT = os.environ.get('BOTTLE_PORT', 8080)
+RELOADER = os.environ.get('BOTTLE_RELOADER', True)
+
 
 p_service = PortfeljService()
 k_service = KriptovaluteService()
@@ -338,5 +341,5 @@ def odjavi_uporabnika():
     """Izbriše piškotek `uporabniško_ime`."""
     bottle.response.delete_cookie("uporabnisko_ime", path="/")
 
-
-bottle.run(debug=True, reloader=True)
+if __name__ == "__main__":
+    bottle.run(host='localhost', port=SERVER_PORT, reloader=RELOADER, debug=True)
