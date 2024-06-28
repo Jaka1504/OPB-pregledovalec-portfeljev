@@ -1,5 +1,4 @@
 requests
-time
 datetime
 psycopg2-binary
 dataclasses
