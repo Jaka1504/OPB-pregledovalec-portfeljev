@@ -1,4 +1,4 @@
-import UserInterface.bottle as bottle
+import bottle
 from Services.auth_service import AuthService
 from Services.portfelj_service import PortfeljService
 from Services.kriptovalute_service import KriptovaluteService
