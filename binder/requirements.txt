@@ -1,6 +1,6 @@
 requests
 datetime
-psycopg2-binary
+psycopg2
 dataclasses
 dataclasses_json
 plotly
