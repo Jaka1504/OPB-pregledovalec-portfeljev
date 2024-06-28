@@ -6,11 +6,11 @@
     <form action="/prijava/" method="post">
       <div class="form-group">
         <label for="uporabnisko_ime">Uporabniško ime:</label>
-        <input type="text" class="form-control" id="uporabnisko_ime" name="uporabnisko_ime" placeholder="Uporabniško ime" minlength="3" maxlength="15">
+        <input type="text" class="form-control" id="uporabnisko_ime" name="uporabnisko_ime" placeholder="Uporabniško ime" minlength="3" maxlength="15" required>
       </div>
       <div class="form-group">
         <label for="geslo">Geslo:</label>
-        <input type="password" class="form-control mb-1" id="geslo" name="geslo" placeholder="Geslo" minlength="5" maxlength="20">
+        <input type="password" class="form-control mb-1" id="geslo" name="geslo" placeholder="Geslo" minlength="5" maxlength="20" required>
       </div>
       % if napaka:
       <div class="alert alert-danger py-1 m-0 fs-6">{{napaka}}</div>
