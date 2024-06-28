@@ -341,5 +341,7 @@ def odjavi_uporabnika():
     """Izbriše piškotek `uporabniško_ime`."""
     bottle.response.delete_cookie("uporabnisko_ime", path="/")
 
-if __name__ == "__main__":
-    bottle.run(host='localhost', port=SERVER_PORT, reloader=RELOADER, debug=True)
+# if __name__ == "__main__":
+#     bottle.run(host='localhost', port=SERVER_PORT, reloader=RELOADER, debug=True)
+
+bottle.run(host="localhost", port=SERVER_PORT)
