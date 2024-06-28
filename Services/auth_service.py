@@ -6,6 +6,11 @@ class AuthService():
     def __init__(self):
         self.repo = Repo()
 
+    
+    def dobi_uporabnika(self, uporabnisko_ime):
+        return self.repo.dobi_uporabnika(uporabnisko_ime)
+
+
     def seznam_uporabniskih_imen(self):
         '''Vrne seznam vseh uporabniskih imen v bazi.'''
         uporabniki = self.repo.dobi_uporabnike()

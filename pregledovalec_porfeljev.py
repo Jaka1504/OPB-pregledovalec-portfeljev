@@ -32,7 +32,18 @@ def img(ime_datoteke):
 
 @bottle.get("/")
 def get_index():
-    return bottle.template("index", uporabnisko_ime=poisci_uporabnisko_ime())
+    auth = AuthService()
+    uporabnisko_ime = poisci_uporabnisko_ime()
+    if uporabnisko_ime:
+        uporabnik = auth.dobi_uporabnika(uporabnisko_ime)
+        ime = uporabnik.ime
+    else:
+        ime = ""
+    return bottle.template(
+        "index",
+        uporabnisko_ime=uporabnisko_ime,
+        ime = ime
+    )
 
 
 @bottle.get("/moji-portfelji/")

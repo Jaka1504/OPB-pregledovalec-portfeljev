@@ -8,9 +8,9 @@
 <h1>Kriptovaluta {{kriptovaluta["ime"]}} v portfelju {{kriptovaluta["portfelj"].ime}}</h1>
 <div class="card bg-secondary mb-6">
   <div class="card-header">
-    <h3>Podrobnosti</h3>
+    <h3 class="mb-0">Podrobnosti</h3>
   </div>
-  <div class="card-body py-0">
+  <div class="card-body py-1">
     <div class="container">
       <div class="row">
         <div class="col">
@@ -60,7 +60,7 @@
 
 <div class="card bg-secondary">
   <div class="card-header">
-    <h3>Seznam transakcij</h3>
+    <h3 class="mb-0">Seznam transakcij</h3>
   </div>
   <div class="card-body py-0">
     <div class="tabela-scroll-mala d-grid">
