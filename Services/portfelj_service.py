@@ -92,6 +92,7 @@ class PortfeljService():
 
 
     def ustvari_portfelj(self, uporabnisko_ime, ime_portfelja):
+        """Ustvari nov portfelj in ga doda v bazo."""
         portfelj = Portfelj(
             lastnik=uporabnisko_ime,
             ime=ime_portfelja,
