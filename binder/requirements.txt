@@ -1,8 +1,8 @@
-bottle==0.12.25
-dataclasses-json==0.6.7
-pandas==2.2.2
-plotly==5.22.0
-psycopg2==2.9.9
-requests==2.32.3
-schedule==1.2.2
+bottle
+dataclasses-json
+pandas
+plotly
+psycopg2
+requests
+schedule
 jupyter_server_proxy
